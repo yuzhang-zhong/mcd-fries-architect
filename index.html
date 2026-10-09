@@ -7,97 +7,198 @@
 <title>薯条建筑师 FriesCraft · 重力挑战版</title>
 <style>
   :root{
-    --mcd-red:#DA291C; --mcd-yellow:#FFC72C; --mcd-dark:#27251F;
-    --bg:#FFF8EC; --panel:#FFFFFF; --line:#F0E3C8;
+    --red:#DA291C; --red-deep:#B8210F; --yellow:#FFC72C;
+    --ink:#221E19; --ink-2:#6B6257; --ink-3:#A59C8F;
+    --bg:#FBF6EC; --paper:#FFFFFF;
+    --line:rgba(34,30,25,.08); --line-2:rgba(34,30,25,.14);
+    --shadow-lg:0 16px 48px rgba(34,30,25,.14);
+    --shadow-sm:0 2px 10px rgba(34,30,25,.08);
+    --r-lg:20px; --r-md:13px; --r-sm:9px;
   }
-  *{margin:0;padding:0;box-sizing:border-box;font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;}
-  html,body{background:var(--bg);overflow:hidden;overscroll-behavior:none;}
+  *{margin:0;padding:0;box-sizing:border-box;
+    font-family:-apple-system,"SF Pro Text","HarmonyOS Sans SC","MiSans","PingFang SC","Noto Sans SC","Microsoft YaHei UI","Microsoft YaHei",sans-serif;}
+  html,body{background:var(--bg);overflow:hidden;overscroll-behavior:none;
+    -webkit-tap-highlight-color:transparent;}
   #scene{position:fixed;inset:0;touch-action:none;}
+
+  /* ============ 主面板 ============ */
   #panel{
-    position:fixed;top:12px;left:12px;width:290px;max-height:calc(100vh - 24px);
-    overflow-y:auto;background:var(--panel);border:2px solid var(--line);border-radius:16px;
-    padding:14px;box-shadow:0 8px 28px rgba(218,41,28,.10);z-index:10;
+    position:fixed;top:14px;left:14px;width:296px;max-height:calc(100vh - 28px);
+    overflow-y:auto;overscroll-behavior:contain;
+    background:rgba(255,255,255,.88);backdrop-filter:blur(16px) saturate(1.4);
+    -webkit-backdrop-filter:blur(16px) saturate(1.4);
+    border:1px solid var(--line-2);border-radius:var(--r-lg);
+    padding:18px 16px 14px;box-shadow:var(--shadow-lg);z-index:10;
     -webkit-overflow-scrolling:touch;
   }
-  h1{font-size:18px;color:var(--mcd-red);display:flex;align-items:center;gap:8px;}
-  h1 .logo{width:22px;height:22px;background:var(--mcd-yellow);border-radius:6px;
-    display:inline-flex;align-items:center;justify-content:center;font-weight:900;color:var(--mcd-red);font-size:14px;}
-  .sub{font-size:11px;color:#999;margin:4px 0 12px;}
-  .sec{margin-bottom:14px;}
-  .sec-title{font-size:12px;font-weight:700;color:var(--mcd-dark);margin-bottom:6px;
-    border-left:3px solid var(--mcd-yellow);padding-left:6px;}
-  .btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
-  .btn-grid.cols3{grid-template-columns:1fr 1fr 1fr;}
-  button{
-    border:1.5px solid var(--line);background:#FFFDF7;border-radius:10px;padding:9px 6px;
-    font-size:12px;cursor:pointer;transition:all .15s;color:var(--mcd-dark);
-    touch-action:manipulation;user-select:none;-webkit-user-select:none;
+  #panel::-webkit-scrollbar{width:4px;}
+  #panel::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:2px;}
+
+  header .brand{display:flex;align-items:center;gap:9px;}
+  header .logo{
+    width:30px;height:30px;border-radius:10px;flex:none;
+    background:linear-gradient(135deg,var(--red) 0%,var(--red-deep) 100%);
+    color:#fff;display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:16px;font-style:italic;letter-spacing:-.5px;
+    box-shadow:0 3px 10px rgba(218,41,28,.35);
   }
-  button:hover{border-color:var(--mcd-yellow);background:#FFF6DC;}
-  button.active{border-color:var(--mcd-red);background:#FDECEA;color:var(--mcd-red);font-weight:700;}
-  button.primary{background:var(--mcd-red);color:#fff;border-color:var(--mcd-red);font-weight:700;}
-  button.primary:hover{background:#B82114;}
-  button.yellow{background:var(--mcd-yellow);border-color:var(--mcd-yellow);font-weight:700;color:var(--mcd-dark);}
+  header h1{font-size:17px;font-weight:800;color:var(--ink);letter-spacing:.02em;}
+  header h1 em{font-style:normal;color:var(--red);}
+  header .sub{font-size:11px;color:var(--ink-3);margin-top:5px;letter-spacing:.02em;}
+
+  /* 分段控件（模式切换） */
+  .seg{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:2px;
+    background:rgba(34,30,25,.055);border-radius:14px;padding:3px;margin:16px 0 14px;
+  }
+  .seg button{
+    border:none;background:transparent;border-radius:11px;padding:8px 4px;
+    font-size:12.5px;font-weight:600;color:var(--ink-2);cursor:pointer;
+    transition:all .18s ease;touch-action:manipulation;user-select:none;-webkit-user-select:none;
+    box-shadow:none;
+  }
+  .seg button.active{
+    background:var(--paper);color:var(--ink);
+    box-shadow:0 1px 6px rgba(34,30,25,.10);
+  }
+  .seg button.active span{color:var(--red);}
+
+  .sec{margin-bottom:16px;}
+  .sec-title{
+    font-size:10.5px;font-weight:700;color:var(--ink-3);
+    text-transform:uppercase;letter-spacing:.14em;margin-bottom:8px;
+    display:flex;align-items:center;gap:6px;
+  }
+  .sec-title::after{content:"";flex:1;height:1px;background:var(--line);}
+
+  /* 按钮 */
+  .btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+  .btn-grid.cols3{grid-template-columns:repeat(3,1fr);}
+  button{
+    border:1px solid var(--line-2);background:var(--paper);border-radius:var(--r-md);
+    padding:0;height:38px;font-size:12.5px;font-weight:600;color:var(--ink);
+    cursor:pointer;transition:transform .12s ease,box-shadow .18s ease,border-color .18s ease;
+    touch-action:manipulation;user-select:none;-webkit-user-select:none;
+    box-shadow:var(--shadow-sm);
+  }
+  button:active{transform:scale(.96);}
+  button:hover{border-color:rgba(218,41,28,.35);}
+  button.active{
+    background:linear-gradient(180deg,#FFF6F4,#FFEDEA);
+    border-color:rgba(218,41,28,.45);color:var(--red);box-shadow:none;
+  }
+  button.primary{
+    background:linear-gradient(180deg,var(--red),var(--red-deep));
+    border-color:transparent;color:#fff;font-weight:700;
+    box-shadow:0 4px 14px rgba(218,41,28,.35);
+  }
+  button.primary:hover{box-shadow:0 6px 20px rgba(218,41,28,.45);}
+  button.gold{
+    background:linear-gradient(180deg,#FFD25A,var(--yellow));
+    border-color:transparent;color:#5C4400;font-weight:700;
+    box-shadow:0 4px 14px rgba(255,199,44,.45);
+  }
+  button.ghost{background:transparent;box-shadow:none;}
   button.wide{grid-column:1 / -1;}
-  #modeTabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:14px;}
-  #stats{font-size:12px;line-height:1.9;color:#555;background:#FFFDF7;border:1px dashed var(--line);
-    border-radius:10px;padding:8px 10px;}
-  #stats b{color:var(--mcd-red);}
-  .hint{font-size:11px;color:#888;line-height:1.7;background:#FFF6DC;border-radius:10px;padding:8px 10px;}
-  .hint kbd{background:#fff;border:1px solid #ddd;border-radius:4px;padding:0 4px;font-size:10px;}
+
+  /* 图鉴预设网格 */
+  .preset-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;}
+  .preset-grid button{height:42px;display:flex;align-items:center;gap:7px;padding:0 10px;justify-content:flex-start;}
+  .preset-grid .ico{font-size:15px;flex:none;}
+  .preset-grid .t{font-size:12.5px;font-weight:600;text-align:left;line-height:1.15;}
+
+  /* 数据卡 */
+  .stat-card{
+    background:rgba(34,30,25,.035);border-radius:var(--r-md);
+    padding:11px 13px;border:1px solid var(--line);
+  }
+  .stat-row{display:flex;justify-content:space-between;align-items:baseline;padding:3px 0;}
+  .stat-row .k{font-size:11.5px;color:var(--ink-2);}
+  .stat-row .v{font-size:13px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;}
+  .stat-row .v.red{color:var(--red);}
+  .stat-row .v.big{font-size:20px;font-weight:800;letter-spacing:-.02em;}
+
+  .hint{
+    font-size:11.5px;color:var(--ink-2);line-height:1.75;
+    background:rgba(255,199,44,.10);border-radius:var(--r-md);padding:10px 12px;
+  }
+  .hint b{color:var(--ink);font-weight:700;}
+  .hint kbd{
+    background:var(--paper);border:1px solid var(--line-2);border-bottom-width:2px;
+    border-radius:5px;padding:0 5px;font-size:10px;font-family:inherit;font-weight:600;
+  }
+
+  select{
+    width:100%;height:38px;border:1px solid var(--line-2);border-radius:var(--r-md);
+    padding:0 10px;font-size:12.5px;font-weight:600;color:var(--ink);
+    background:var(--paper);box-shadow:var(--shadow-sm);margin-bottom:7px;outline:none;
+  }
+
+  /* ============ 挑战 HUD ============ */
+  #hud{
+    position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:9;display:none;
+    background:rgba(255,255,255,.9);backdrop-filter:blur(16px) saturate(1.4);
+    -webkit-backdrop-filter:blur(16px) saturate(1.4);
+    border:1px solid var(--line-2);border-radius:16px;
+    padding:12px 18px;box-shadow:var(--shadow-lg);min-width:300px;
+  }
+  #hud .grid{display:grid;grid-template-columns:1fr 1fr;gap:3px 22px;}
+  #hud .cell{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;}
+  #hud .cell .k{color:var(--ink-2);}
+  #hud .cell .v{font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums;font-size:13px;}
+  #hud .cell .v.red{color:var(--red);}
+  #hud .goal{grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;}
+  #hud .goal .v{font-size:15px;}
+  #stabBar{height:7px;background:rgba(34,30,25,.08);border-radius:4px;overflow:hidden;margin-top:8px;}
+  #stabFill{height:100%;width:0%;border-radius:4px;
+    background:linear-gradient(90deg,#DA291C 0%,#FFC72C 55%,#6FBF73 100%);
+    transition:width .25s ease;}
+  #windTag{display:none;font-size:12px;color:var(--red);font-weight:700;margin-top:6px;letter-spacing:.02em;}
+
+  /* Toast */
   #toast{
-    position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
-    background:var(--mcd-dark);color:#fff;padding:10px 20px;border-radius:24px;font-size:13px;
-    opacity:0;transition:all .3s;z-index:30;pointer-events:none;max-width:86vw;text-align:center;
+    position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(16px);
+    background:var(--ink);color:#FFF9EE;padding:11px 22px;border-radius:14px;
+    font-size:13px;font-weight:600;letter-spacing:.02em;
+    opacity:0;transition:all .3s cubic-bezier(.2,.9,.3,1.2);z-index:30;
+    pointer-events:none;max-width:86vw;text-align:center;
+    box-shadow:0 10px 30px rgba(34,30,25,.3);
   }
   #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-  /* 挑战 HUD */
-  #hud{
-    position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:9;display:none;
-    background:rgba(255,255,255,.94);border:2px solid var(--line);border-radius:14px;
-    padding:10px 16px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.08);min-width:260px;
-  }
-  #hud .row{display:flex;justify-content:space-between;gap:16px;font-size:13px;margin:2px 0;}
-  #hud .row span:last-child{font-weight:700;color:var(--mcd-red);}
-  #stabBar{height:8px;background:#F3E9D2;border-radius:4px;overflow:hidden;margin-top:6px;}
-  #stabFill{height:100%;width:0%;background:linear-gradient(90deg,#DA291C,#FFC72C,#7BB661);transition:width .2s;}
-  #windTag{display:none;font-size:12px;color:#B82114;font-weight:700;margin-top:4px;}
-  /* 手机悬浮控件 */
-  #panelToggle{
-    position:fixed;top:12px;left:12px;z-index:21;display:none;
-    width:44px;height:44px;border-radius:12px;font-size:20px;line-height:1;
-    background:var(--panel);border:2px solid var(--line);
-  }
-  #touchPad{
-    position:fixed;right:12px;bottom:16px;z-index:20;display:none;
-    grid-template-columns:repeat(2,52px);gap:8px;
-  }
-  #touchPad button{
-    width:52px;height:52px;border-radius:14px;font-size:20px;
-    background:rgba(255,255,255,.92);border:2px solid var(--line);
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
-  }
-  .hidden{display:none !important;}
+
   /* 胜利彩带 */
-  .confetti{position:fixed;top:-12px;width:9px;height:15px;z-index:40;pointer-events:none;
+  .confetti{position:fixed;top:-12px;width:8px;height:14px;z-index:40;pointer-events:none;
     animation:confFall linear forwards;border-radius:2px;}
   @keyframes confFall{
     0%{transform:translateY(0) rotate(0deg);opacity:1;}
-    100%{transform:translateY(105vh) rotate(720deg);opacity:0.7;}
+    100%{transform:translateY(105vh) rotate(720deg);opacity:.75;}
   }
-  #bpSelect{
-    width:100%;border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;
-    font-size:12px;background:#FFFDF7;color:var(--mcd-dark);margin-bottom:6px;
+
+  /* 移动端悬浮件 */
+  #panelToggle{
+    position:fixed;top:14px;left:14px;z-index:21;display:none;
+    width:46px;height:46px;border-radius:15px;font-size:21px;
+    background:rgba(255,255,255,.9);border:1px solid var(--line-2);
+    box-shadow:var(--shadow-lg);
   }
-  /* 手机适配 */
+  #touchPad{position:fixed;right:14px;bottom:18px;z-index:20;display:none;
+    grid-template-columns:repeat(2,54px);gap:9px;}
+  #touchPad button{
+    width:54px;height:54px;border-radius:16px;font-size:21px;
+    background:rgba(255,255,255,.92);border:1px solid var(--line-2);
+    box-shadow:var(--shadow-lg);
+  }
+
+  .hidden{display:none !important;}
+
   @media (max-width:768px){
-    #panel{width:calc(100vw - 24px);max-height:52vh;top:auto;bottom:12px;left:12px;}
-    #panel.collapsed{transform:translateY(calc(100% + 16px));transition:transform .25s;}
-    #panel{transition:transform .25s;}
+    #panel{width:calc(100vw - 28px);max-height:56vh;top:auto;bottom:14px;left:14px;
+      transition:transform .28s cubic-bezier(.3,.8,.3,1);}
+    #panel.collapsed{transform:translateY(calc(100% + 18px));}
     #panelToggle{display:block;}
     #touchPad.on{display:grid;}
-    #hud{top:64px;min-width:220px;padding:8px 12px;}
-    #hud .row{font-size:12px;}
+    #hud{top:68px;min-width:250px;padding:10px 14px;}
+    #hud .grid{gap:2px 14px;}
   }
 </style>
 </head>
@@ -107,10 +208,13 @@
 <button id="panelToggle">🍟</button>
 
 <div id="hud">
-  <div class="row"><span>🎯 目标高度</span><span id="hudGoal">-</span></div>
-  <div class="row"><span>📏 当前高度</span><span id="hudHeight">0.00 m</span></div>
-  <div class="row"><span>🍟 已用薯条</span><span id="hudFries">0</span></div>
-  <div class="row"><span>⏱️ 稳定计时</span><span id="hudTimer">0.0 / 5.0 s</span></div>
+  <div class="grid">
+    <div class="cell goal"><span class="k">🎯 目标高度</span><span class="v red" id="hudGoal">-</span></div>
+    <div class="cell"><span class="k">📏 当前高度</span><span class="v" id="hudHeight">0.00 m</span></div>
+    <div class="cell"><span class="k">🍟 薯条</span><span class="v" id="hudFries">0 / 0</span></div>
+    <div class="cell"><span class="k">⏱️ 稳定计时</span><span class="v" id="hudTimer">0.0 / 5.0 s</span></div>
+    <div class="cell"><span class="k">🏆 本难度纪录</span><span class="v" id="hudBest">—</span></div>
+  </div>
   <div id="stabBar"><div id="stabFill"></div></div>
   <div id="windTag">💨 妖风来袭！扶稳你的塔！</div>
 </div>
@@ -123,55 +227,60 @@
 </div>
 
 <div id="panel">
-  <h1><span class="logo">M</span>薯条建筑师</h1>
-  <div class="sub">FriesCraft 重力挑战版 · 真物理，会塌的那种</div>
+  <header>
+    <div class="brand">
+      <div class="logo">M</div>
+      <h1>薯条建筑师 <em>FriesCraft</em></h1>
+    </div>
+    <div class="sub">真物理重力 · 会倒、会滑、会塌</div>
+  </header>
 
-  <div id="modeTabs">
-    <button data-mode="gallery" class="active">📖 图鉴</button>
-    <button data-mode="sandbox">🖐️ 自由搭</button>
-    <button data-mode="tower">🗼 挑战</button>
+  <div class="seg" id="modeTabs">
+    <button data-mode="gallery" class="active"><span>📖</span> 图鉴</button>
+    <button data-mode="sandbox"><span>🖐️</span> 自由搭</button>
+    <button data-mode="tower"><span>🗼</span> 挑战</button>
   </div>
 
-  <!-- 图鉴模式 -->
+  <!-- 图鉴 -->
   <div id="ui-gallery">
     <div class="sec">
-      <div class="sec-title">🦖 12 种官方 & 创意造型</div>
-      <div class="btn-grid">
-        <button data-preset="triceratops">官方三角龙</button>
-        <button data-preset="maidadlong">网红麦当龙</button>
-        <button data-preset="turtle">薯条小乌龟</button>
-        <button data-preset="crab">麦当大闸蟹</button>
-        <button data-preset="arches">金拱门 M</button>
-        <button data-preset="heart">薯条爱心</button>
-        <button data-preset="rocket">薯条火箭</button>
-        <button data-preset="octopus">薯条章鱼</button>
-        <button data-preset="cactus">仙人掌盆栽</button>
-        <button data-preset="cake">生日蜡烛蛋糕</button>
-        <button data-preset="snowman">麦乐鸡雪人</button>
-        <button data-preset="crown">麦门皇冠</button>
+      <div class="sec-title">灵感图鉴 · 12 种造型</div>
+      <div class="preset-grid">
+        <button data-preset="triceratops"><span class="ico">🦖</span><span class="t">官方三角龙</span></button>
+        <button data-preset="maidadlong"><span class="ico">🦕</span><span class="t">网红麦当龙</span></button>
+        <button data-preset="turtle"><span class="ico">🐢</span><span class="t">薯条小乌龟</span></button>
+        <button data-preset="crab"><span class="ico">🦀</span><span class="t">麦当大闸蟹</span></button>
+        <button data-preset="arches"><span class="ico">🟡</span><span class="t">金拱门 M</span></button>
+        <button data-preset="heart"><span class="ico">❤️</span><span class="t">薯条爱心</span></button>
+        <button data-preset="rocket"><span class="ico">🚀</span><span class="t">薯条火箭</span></button>
+        <button data-preset="octopus"><span class="ico">🐙</span><span class="t">薯条章鱼</span></button>
+        <button data-preset="cactus"><span class="ico">🌵</span><span class="t">仙人掌盆栽</span></button>
+        <button data-preset="cake"><span class="ico">🎂</span><span class="t">生日蜡烛蛋糕</span></button>
+        <button data-preset="snowman"><span class="ico">⛄</span><span class="t">麦乐鸡雪人</span></button>
+        <button data-preset="crown"><span class="ico">👑</span><span class="t">麦门皇冠</span></button>
       </div>
     </div>
     <div class="sec">
-      <div class="sec-title">💡 图鉴玩法</div>
-      <div class="hint">陈列室里看官方配方和创意造型，点选积木可拖动微调（<kbd>Q</kbd><kbd>E</kbd> 旋转、<kbd>+</kbd><kbd>-</kbd> 调长短）。<br>想上手真搭？去「自由搭」和「挑战」——那里的薯条有重力，会倒、会滑、会塌。</div>
+      <div class="sec-title">玩法</div>
+      <div class="hint">陈列室里看<b>官方配方</b>和创意造型（麦当劳阿根廷官方三角龙 = 2 麦乐鸡 + 14 薯条）。点选积木可拖动微调：<kbd>Q</kbd><kbd>E</kbd> 旋转 · <kbd>W</kbd><kbd>S</kbd><kbd>A</kbd><kbd>D</kbd> 倾倒 · <kbd>+</kbd><kbd>-</kbd> 长短 · <kbd>Del</kbd> 删除。<br>想上手真搭？切「自由搭」和「挑战」——那里有重力。</div>
     </div>
   </div>
 
-  <!-- 自由搭建模式 -->
+  <!-- 自由搭 -->
   <div id="ui-sandbox" class="hidden">
     <div class="sec">
-      <div class="sec-title">🍟 选积木，点餐盘放置</div>
+      <div class="sec-title">选积木 · 点餐盘放置</div>
       <div class="btn-grid cols3">
         <button data-spawn="fryS">短薯条</button>
         <button data-spawn="fryM" class="active">中薯条</button>
         <button data-spawn="fryL">长薯条</button>
         <button data-spawn="nugget">麦乐鸡</button>
         <button data-spawn="patty">肉饼</button>
-        <button id="btnUndo">↩️ 撤销</button>
+        <button id="btnUndo">↩︎ 撤销</button>
       </div>
     </div>
     <div class="sec">
-      <div class="sec-title">📐 蓝图模式（照着拼）</div>
+      <div class="sec-title">蓝图模式 · 照着拼</div>
       <select id="bpSelect">
         <option value="triceratops">🦖 官方三角龙</option>
         <option value="maidadlong">🦕 网红麦当龙</option>
@@ -191,47 +300,49 @@
       </div>
     </div>
     <div class="sec">
-      <div class="sec-title">📊 物理数据</div>
-      <div id="stats">餐盘空空如也</div>
+      <div class="sec-title">物理数据</div>
+      <div class="stat-card" id="stats">餐盘空空如也，选块积木开始</div>
     </div>
     <div class="sec">
       <div class="btn-grid">
-        <button id="btnShareSand" class="yellow">📣 分享我的造型</button>
-        <button id="btnClearSand">🧹 清空</button>
+        <button id="btnShareSand" class="gold">📣 分享造型</button>
+        <button id="btnClearSand" class="ghost">🧹 清空</button>
       </div>
     </div>
     <div class="sec">
-      <div class="sec-title">⌨️ 操作</div>
-      <div class="hint">手指/鼠标在餐盘上移动 → 幽灵预览，<b>轻点一下</b>放置（有重力！）。<br>右下角悬浮按钮调整方向；桌面端 <kbd>Q</kbd><kbd>E</kbd> 旋转、<kbd>W</kbd><kbd>S</kbd> 倾倒。<br>小技巧：单根薯条立不住，三根斜靠成"帐篷"最稳；先铺肉饼底座更容易。</div>
+      <div class="sec-title">操作</div>
+      <div class="hint">移动出现<b>幽灵预览</b>，轻点放置（有重力！）。<br>手机：右下角 ↺↻⤴⤵ 调方向；桌面：<kbd>Q</kbd><kbd>E</kbd> 旋转 · <kbd>W</kbd><kbd>S</kbd> 倾倒。<br>技巧：单根立不住，<b>三根斜靠成"帐篷"</b>最稳；重物铺底。</div>
     </div>
   </div>
 
-  <!-- 高塔挑战模式 -->
+  <!-- 挑战 -->
   <div id="ui-tower" class="hidden">
     <div class="sec">
-      <div class="sec-title">🗼 选难度</div>
+      <div class="sec-title">选难度</div>
       <div class="btn-grid cols3">
-        <button data-level="0" class="active">新手<br>0.55m</button>
-        <button data-level="1">老手<br>0.80m</button>
-        <button data-level="2">妖风<br>1.05m</button>
+        <button data-level="0" class="active">新手<small style="display:block;font-size:10px;color:var(--ink-3);font-weight:600">0.55m</small></button>
+        <button data-level="1">老手<small style="display:block;font-size:10px;color:var(--ink-3);font-weight:600">0.80m</small></button>
+        <button data-level="2">妖风<small style="display:block;font-size:10px;color:var(--ink-3);font-weight:600">1.05m</small></button>
       </div>
     </div>
     <div class="sec">
       <div class="btn-grid">
         <button id="btnStartTower" class="primary wide">▶️ 开始挑战</button>
-        <button id="btnShareTower" class="yellow">📣 分享战绩</button>
-        <button id="btnResetTower">🔄 重来</button>
+        <button id="btnShareTower" class="gold">📣 分享战绩</button>
+        <button id="btnResetTower" class="ghost">🔄 重来</button>
       </div>
     </div>
     <div class="sec">
-      <div class="sec-title">📜 规则</div>
-      <div class="hint">用有限薯条搭塔，达到目标高度并保持 <b>5 秒不倒</b> 即胜利。<br>· 新手：20 根，无风<br>· 老手：16 根，轻风扰动<br>· 妖风：14 根，随机强风突袭 💨<br>用越少薯条达标越牛，最好成绩自动存在本机。</div>
+      <div class="sec-title">规则</div>
+      <div class="hint">限定薯条搭塔，<b>达标且稳住 5 秒</b>获胜。<br>新手 20 根无风 · 老手 16 根轻风 · 妖风 14 根强风突袭 💨<br>用越少薯条达标越牛，纪录自动存本机。</div>
     </div>
   </div>
 
   <div class="sec">
-    <div class="btn-grid">
-      <button id="btnShot" class="yellow wide">📸 保存作品截图</button>
+    <div class="btn-grid cols3">
+      <button id="btnShot" class="gold">📸 截图</button>
+      <button id="btnCam">🎥 复位视角</button>
+      <button id="btnMute" class="ghost">🔊 音效</button>
     </div>
   </div>
 </div>
@@ -254,7 +365,7 @@ import * as CANNON from 'cannon-es';
 /* ================= 基础场景 ================= */
 const container = document.getElementById('scene');
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xFFF3D6);
+scene.background = new THREE.Color(0xFBF3E0);
 
 const camera = new THREE.PerspectiveCamera(45, innerWidth/innerHeight, 0.1, 100);
 camera.position.set(1.7, 1.5, 2.3);
@@ -271,26 +382,31 @@ controls.enableDamping = true;
 controls.maxPolarAngle = Math.PI/2 - 0.05;
 controls.minDistance = 0.8; controls.maxDistance = 8;
 controls.target.set(0, 0.3, 0);
+controls.saveState();
 
-scene.add(new THREE.AmbientLight(0xffffff, 0.75));
-const sun = new THREE.DirectionalLight(0xffffff, 1.6);
+/* 光照：暖主光 + 冷补光 + 半球光，让食物更有食欲 */
+scene.add(new THREE.AmbientLight(0xFFF6E8, 0.72));
+scene.add(new THREE.HemisphereLight(0xFFFDF2, 0xE8D5B5, 0.35));
+const sun = new THREE.DirectionalLight(0xFFF2D5, 1.7);
 sun.position.set(2.5, 4, 1.5);
 sun.castShadow = true;
 sun.shadow.mapSize.set(2048, 2048);
 sun.shadow.camera.left = -2; sun.shadow.camera.right = 2;
 sun.shadow.camera.top = 2; sun.shadow.camera.bottom = -2;
+sun.shadow.radius = 4;
 scene.add(sun);
-const fill = new THREE.DirectionalLight(0xFFE9B0, 0.4);
+const fill = new THREE.DirectionalLight(0xDCE8FF, 0.35);
 fill.position.set(-2, 2, -2); scene.add(fill);
 
+/* 餐桌 / 餐盘 / 垫纸 */
 const table = new THREE.Mesh(
   new THREE.CylinderGeometry(3.2, 3.2, 0.06, 64),
-  new THREE.MeshStandardMaterial({ color:0xDA291C, roughness:0.8 })
+  new THREE.MeshStandardMaterial({ color:0xC4372A, roughness:0.85 })
 );
 table.position.y = -0.08; table.receiveShadow = true; scene.add(table);
 const tray = new THREE.Mesh(
   new THREE.CylinderGeometry(1.05, 1.0, 0.045, 64),
-  new THREE.MeshStandardMaterial({ color:0xF5F0E6, roughness:0.6 })
+  new THREE.MeshStandardMaterial({ color:0xF5F0E6, roughness:0.55, metalness:0.05 })
 );
 tray.position.y = -0.025; tray.receiveShadow = true; scene.add(tray);
 const paper = new THREE.Mesh(
@@ -298,6 +414,26 @@ const paper = new THREE.Mesh(
   new THREE.MeshStandardMaterial({ color:0xFFFDF4, roughness:0.95 })
 );
 paper.rotation.x = -Math.PI/2; paper.position.y = 0.001; paper.receiveShadow = true; scene.add(paper);
+
+/* ================= 音效（WebAudio 合成，零素材） ================= */
+let actx = null, muted = false;
+function beep(freq, dur=0.08, type='triangle', vol=0.14, when=0){
+  if(muted) return;
+  try{
+    actx = actx || new (window.AudioContext||window.webkitAudioContext)();
+    const t = actx.currentTime + when;
+    const o = actx.createOscillator(), g = actx.createGain();
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+    o.connect(g); g.connect(actx.destination);
+    o.start(t); o.stop(t + dur + 0.02);
+  }catch(e){}
+}
+const sndPlace  = ()=>beep(440, .06, 'triangle', .12);
+const sndSelect = ()=>beep(660, .04, 'sine', .08);
+const sndWin    = ()=>{ [523,659,784,1047].forEach((f,i)=>beep(f,.14,'triangle',.13,i*.11)); };
+const sndMile   = ()=>{ [659,880].forEach((f,i)=>beep(f,.1,'sine',.1,i*.09)); };
 
 /* ================= 物理世界 ================= */
 const world = new CANNON.World({ gravity: new CANNON.Vec3(0, -18, 0) });
@@ -316,12 +452,14 @@ rebuildContact();
 const groundBody = new CANNON.Body({ mass: 0, material: groundPhysMat, shape: new CANNON.Plane() });
 groundBody.quaternion.setFromEuler(-Math.PI/2, 0, 0);
 world.addBody(groundBody);
-/* 餐盘边缘隐形围栏 */
 const wallBody = new CANNON.Body({ mass: 0, material: groundPhysMat });
 for(let i=0;i<12;i++){
   const a = i/12*Math.PI*2;
-  const box = new CANNON.Box(new CANNON.Vec3(0.02, 0.5, 0.3));
-  wallBody.addShape(box, new CANNON.Vec3(Math.cos(a)*1.0, 0.5, Math.sin(a)*1.0), new CANNON.Quaternion().setFromEuler(0, -a, 0));
+  wallBody.addShape(
+    new CANNON.Box(new CANNON.Vec3(0.02, 0.5, 0.3)),
+    new CANNON.Vec3(Math.cos(a)*1.0, 0.5, Math.sin(a)*1.0),
+    new CANNON.Quaternion().setFromEuler(0, -a, 0)
+  );
 }
 world.addBody(wallBody);
 
@@ -331,13 +469,13 @@ const fryGeo = new THREE.BoxGeometry(0.085, 1, 0.085);
 const nugGeo = new THREE.SphereGeometry(0.24, 28, 20);
 const pattyGeo = new THREE.CylinderGeometry(0.34, 0.34, 0.15, 28);
 
-let blocks = [];   // {mesh, body|null, kind, len}
+let blocks = [];
 let selected = null;
 let mode = 'gallery';
 
 function makeFryMesh(len){
   const c = FRY_COLORS[Math.floor(Math.random()*FRY_COLORS.length)];
-  const m = new THREE.Mesh(fryGeo, new THREE.MeshStandardMaterial({ color:c, roughness:0.7 }));
+  const m = new THREE.Mesh(fryGeo, new THREE.MeshStandardMaterial({ color:c, roughness:0.65 }));
   m.scale.y = len; m.castShadow = m.receiveShadow = true;
   return m;
 }
@@ -389,7 +527,6 @@ function clearAll(){
 }
 
 /* ================= 图鉴（静态预设） ================= */
-/* 蓝图模式：预设以半透明蓝色虚影呈现，供用户照着拼 */
 const bpMat = new THREE.MeshBasicMaterial({ color:0x4A90D9, transparent:true, opacity:0.20, depthWrite:false });
 let blueprintMode = false;
 let blueprints = [];
@@ -430,7 +567,7 @@ function toggleBlueprint(){
   presets[document.getElementById('bpSelect').value]();
   blueprintMode = false;
   btn.textContent = '🙈 隐藏蓝图';
-  toast('蓝图已就位：照着蓝色虚影拼，拼完可隐藏');
+  toast('蓝图已就位：照着蓝色虚影拼');
 }
 const V = (x,y,z)=>new THREE.Vector3(x,y,z);
 
@@ -572,7 +709,7 @@ const presets = {
 };
 
 /* ================= 幽灵预览 ================= */
-const ghostMat = new THREE.MeshStandardMaterial({ color:0xF2C14E, transparent:true, opacity:0.45, roughness:0.7 });
+const ghostMat = new THREE.MeshStandardMaterial({ color:0xF2C14E, transparent:true, opacity:0.5, roughness:0.7 });
 let ghost = null, ghostKind = 'fryM', ghostYaw = 0, ghostTilt = 0;
 const platePlane = new THREE.Plane(V(0,1,0), 0);
 
@@ -609,7 +746,7 @@ const comRing = new THREE.Mesh(
 comRing.rotation.x = -Math.PI/2;
 comDot.visible = comRing.visible = false;
 scene.add(comDot, comRing);
-const COM_GREEN = new THREE.Color(0x7BB661), COM_ORANGE = new THREE.Color(0xFF8C42), COM_RED = new THREE.Color(0xDA291C);
+const COM_GREEN = new THREE.Color(0x6FBF73), COM_ORANGE = new THREE.Color(0xFF8C42), COM_RED = new THREE.Color(0xDA291C);
 function updateComIndicator(stab){
   const show = mode!=='gallery' && blocks.length > 0;
   comDot.visible = comRing.visible = show;
@@ -631,8 +768,8 @@ function updateComIndicator(stab){
 
 /* ================= 胜利彩带 ================= */
 function confetti(){
-  const colors = ['#DA291C','#FFC72C','#7BB661','#4A90D9','#FF8C42'];
-  for(let i=0;i<80;i++){
+  const colors = ['#DA291C','#FFC72C','#6FBF73','#4A90D9','#FF8C42'];
+  for(let i=0;i<90;i++){
     const s = document.createElement('div');
     s.className = 'confetti';
     s.style.left = Math.random()*100+'vw';
@@ -655,18 +792,24 @@ let stableTime = 0, windTimer = 0, windActive = 0;
 let best = {};
 try { best = JSON.parse(localStorage.getItem('friescraft_best')||'{}'); } catch(e){}
 
+function refreshBestLabel(){
+  const el = document.getElementById('hudBest');
+  const b = best['L'+level];
+  el.textContent = b ? `${b.fries} 根 · ${b.height}m` : '—';
+}
 function startTower(){
   clearAll();
   towerRunning = true; stableTime = 0; windTimer = 3; windActive = 0;
   friction = LEVELS[level].friction; rebuildContact();
   document.getElementById('hud').style.display = 'block';
-  document.getElementById('hudGoal').textContent = LEVELS[level].goal.toFixed(2)+' m（'+LEVELS[level].name+'）';
+  document.getElementById('hudGoal').textContent = LEVELS[level].goal.toFixed(2)+' m · '+LEVELS[level].name;
+  refreshBestLabel();
   toast(`挑战开始：${LEVELS[level].budget} 根薯条，搭到 ${LEVELS[level].goal}m 并稳住 5 秒！`);
   collapsePanelIfMobile();
 }
 function endTower(){
   towerRunning = false;
-  confetti();
+  confetti(); sndWin();
   const h = towerHeight();
   const used = blocks.filter(b=>b.kind.startsWith('fry')).length;
   const key = 'L'+level;
@@ -675,9 +818,10 @@ function endTower(){
     try{ localStorage.setItem('friescraft_best', JSON.stringify(best)); }catch(e){}
     toast(`🏆 新纪录！${used} 根薯条搭到 ${h.toFixed(2)}m！`);
   } else {
-    toast(`🎉 挑战成功！${used} 根薯条，${h.toFixed(2)}m。本难度纪录 ${best[key].fries} 根。`);
+    toast(`🎉 挑战成功！${used} 根薯条 · ${h.toFixed(2)}m。本难度纪录 ${best[key].fries} 根`);
   }
-  document.getElementById('hud').style.display = 'none';
+  refreshBestLabel();
+  setTimeout(()=>{ document.getElementById('hud').style.display = 'none'; }, 2500);
 }
 function towerHeight(){
   let h = 0;
@@ -695,7 +839,7 @@ function avgMotion(){
   return n ? s/n : 0;
 }
 
-/* ================= 交互（鼠标+触屏统一 pointer 事件） ================= */
+/* ================= 交互（pointer 统一鼠标触屏） ================= */
 const ray = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 let downInfo = null;
@@ -710,18 +854,19 @@ function setMouse(e){
 renderer.domElement.addEventListener('pointerdown', e=>{
   setMouse(e); ray.setFromCamera(mouse, camera);
   downInfo = { x:e.clientX, y:e.clientY, t:Date.now() };
+  if(!actx){ try{ actx = new (window.AudioContext||window.webkitAudioContext)(); }catch(err){} } // 首次交互解锁音频
   if(mode==='gallery'){
     const meshes = blocks.map(b=>b.mesh);
     const hits = ray.intersectObjects(meshes, false);
     if(hits.length){
       select(hits[0].object);
+      sndSelect();
       draggingGallery = true; controls.enabled = false;
       const p = new THREE.Vector3();
       ray.ray.intersectPlane(platePlane, p);
       dragOffset.copy(hits[0].object.position).sub(p);
     } else select(null);
   } else if(ghost){
-    // 触屏没有 hover：按下瞬间先把幽灵放到触点，保证轻点即可放置
     const p = new THREE.Vector3();
     if(ray.ray.intersectPlane(platePlane, p)){
       p.x = THREE.MathUtils.clamp(p.x, -0.92, 0.92);
@@ -769,13 +914,29 @@ function placeFromGhost(){
     const used = blocks.filter(b=>b.kind.startsWith('fry')).length;
     if(ghostKind.startsWith('fry') && used >= LEVELS[level].budget){
       toast(`薯条用完啦（${LEVELS[level].budget} 根上限），点"重来"再战`);
+      beep(180,.12,'sawtooth',.1);
       return;
     }
   }
-  const rec = spawnPhysical(ghostKind, ghost.position, ghost.quaternion);
-  if(rec.body){
-    rec.body.velocity.set((Math.random()-0.5)*0.05, 0, (Math.random()-0.5)*0.05);
+  // 防重叠弹射：与已有积木太近时自动挪位，并保留一点下落落差
+  const pos = ghost.position.clone();
+  let guard = 0;
+  while(guard++ < 8){
+    const clash = blocks.some(b=>{
+      if(!b.body) return false;
+      const dx = b.body.position.x - pos.x, dz = b.body.position.z - pos.z;
+      return dx*dx + dz*dz < 0.014 && Math.abs(b.body.position.y - pos.y) < 0.35;
+    });
+    if(!clash) break;
+    pos.x = THREE.MathUtils.clamp(pos.x + (Math.random()-0.5)*0.22, -0.9, 0.9);
+    pos.z = THREE.MathUtils.clamp(pos.z + (Math.random()-0.5)*0.22, -0.9, 0.9);
   }
+  pos.y += 0.1;
+  const rec = spawnPhysical(ghostKind, pos, ghost.quaternion);
+  if(rec.body){
+    rec.body.velocity.set((Math.random()-0.5)*0.04, 0, (Math.random()-0.5)*0.04);
+  }
+  sndPlace();
   updateStats();
 }
 
@@ -785,7 +946,6 @@ function select(mesh){
   if(selected && selected.material.emissive) selected.material.emissive.setHex(0x553300);
 }
 
-/* 键盘（桌面端） */
 addEventListener('keydown', e=>{
   if(e.target.tagName==='INPUT') return;
   const k = e.key;
@@ -814,7 +974,7 @@ addEventListener('keydown', e=>{
   }
 });
 
-/* 触屏悬浮方向键 */
+/* 触屏方向键 */
 document.querySelectorAll('#touchPad button').forEach(b=>{
   b.addEventListener('click', ()=>{
     const t = b.dataset.tp;
@@ -845,13 +1005,13 @@ function enterMode(m){
   friction = 0.55; rebuildContact();
   ensureGhost();
   if(m==='gallery'){ presets.triceratops(); }
-  if(m==='tower'){ toast('选好难度，点「开始挑战」'); }
+  if(m==='tower'){ refreshBestLabel(); toast('选好难度，点「开始挑战」'); }
   updateStats();
 }
 document.querySelectorAll('#modeTabs button').forEach(b=>b.onclick=()=>enterMode(b.dataset.mode));
 document.querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>{
   clearAll(); presets[b.dataset.preset]();
-  toast(b.textContent.trim()+' 已上桌');
+  toast(b.querySelector('.t').textContent.trim()+' 已上桌');
   collapsePanelIfMobile();
 });
 document.querySelectorAll('[data-spawn]').forEach(b=>b.onclick=()=>{
@@ -863,6 +1023,7 @@ document.querySelectorAll('[data-level]').forEach(b=>b.onclick=()=>{
   document.querySelectorAll('[data-level]').forEach(x=>x.classList.remove('active'));
   b.classList.add('active');
   level = +b.dataset.level;
+  refreshBestLabel();
   if(towerRunning) startTower();
 });
 document.getElementById('btnStartTower').onclick = startTower;
@@ -876,6 +1037,12 @@ document.getElementById('btnBlueprint').onclick = toggleBlueprint;
 document.getElementById('bpSelect').onchange = ()=>{
   if(blueprints.length){ clearBlueprint(); toggleBlueprint(); }
 };
+document.getElementById('btnCam').onclick = ()=>{ controls.reset(); toast('视角已复位'); };
+document.getElementById('btnMute').onclick = function(){
+  muted = !muted;
+  this.textContent = muted ? '🔇 静音' : '🔊 音效';
+  if(!muted) sndSelect();
+};
 
 const panel = document.getElementById('panel');
 document.getElementById('panelToggle').onclick = ()=>panel.classList.toggle('collapsed');
@@ -888,10 +1055,12 @@ function updateStats(){
   if(!el) return;
   const fries = blocks.filter(b=>b.kind.startsWith('fry')).length;
   const others = blocks.length - fries;
-  el.innerHTML = blocks.length
-    ? `🍟 薯条 <b>${fries}</b> 根` + (others?` · 其他积木 <b>${others}</b>`:'') +
-      `<br>📏 塔高 <b>${towerHeight().toFixed(2)}</b> m · 稳定度 <b>${Math.round((1-Math.min(avgMotion()/0.6,1))*100)}%</b>`
-    : '餐盘空空如也';
+  const stab = Math.round((1-Math.min(avgMotion()/0.6,1))*100);
+  el.innerHTML = blocks.length ? `
+    <div class="stat-row"><span class="k">🍟 薯条</span><span class="v">${fries} 根${others?` + ${others} 件`:''}</span></div>
+    <div class="stat-row"><span class="k">📏 塔高</span><span class="v big">${towerHeight().toFixed(2)} m</span></div>
+    <div class="stat-row"><span class="k">⚖️ 稳定度</span><span class="v ${stab>85?'':'red'}">${stab}%</span></div>`
+    : '餐盘空空如也，选块积木开始';
 }
 function shareText(){
   const fries = blocks.filter(b=>b.kind.startsWith('fry')).length;
@@ -912,7 +1081,7 @@ document.getElementById('btnShot').onclick = ()=>{
 /* ================= 主循环 ================= */
 const clock = new THREE.Clock();
 let statTick = 0;
-let milestones = [0.3, 0.6, 0.9, 1.2];   // 自由搭里程碑
+let milestones = [0.3, 0.6, 0.9, 1.2];
 function loop(){
   requestAnimationFrame(loop);
   const dt = Math.min(clock.getDelta(), 0.05);
@@ -928,7 +1097,6 @@ function loop(){
     const motion = avgMotion();
     const stabNow = Math.max(0, 1 - motion/0.6);
     updateComIndicator(stabNow);
-    // 薯约会用完时幽灵变红
     if(ghost){
       const usedF = blocks.filter(b=>b.kind.startsWith('fry')).length;
       const blocked = mode==='tower' && towerRunning && ghostKind.startsWith('fry') && usedF >= LEVELS[level].budget;
@@ -940,6 +1108,7 @@ function loop(){
         windTimer = 3 + Math.random()*4;
         windActive = 0.8;
         document.getElementById('windTag').style.display = 'block';
+        beep(220,.25,'sawtooth',.08);
         const a = Math.random()*Math.PI*2;
         const f = LEVELS[level].windMax;
         blocks.forEach(b=>{
@@ -960,11 +1129,11 @@ function loop(){
       document.getElementById('hudTimer').textContent = stableTime.toFixed(1)+' / 5.0 s';
     }
     if(mode==='sandbox' && blocks.length){
-      // 里程碑鼓励
       const h = towerHeight();
       if(milestones.length && h >= milestones[0]){
         const reached = milestones.shift();
-        toast(`🎉 突破 ${reached.toFixed(1)}m！继续往上，重心越低越稳`);
+        toast(`🎉 突破 ${reached.toFixed(1)}m！重心越低越稳`);
+        sndMile();
       }
       if(++statTick % 30 === 0) updateStats();
     }
