@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>薯条建筑师 FriesCraft · 重力挑战版</title>
+<style>
+  :root{
+    --mcd-red:#DA291C; --mcd-yellow:#FFC72C; --mcd-dark:#27251F;
+    --bg:#FFF8EC; --panel:#FFFFFF; --line:#F0E3C8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;}
+  html,body{background:var(--bg);overflow:hidden;overscroll-behavior:none;}
+  #scene{position:fixed;inset:0;touch-action:none;}
+  #panel{
+    position:fixed;top:12px;left:12px;width:290px;max-height:calc(100vh - 24px);
+    overflow-y:auto;background:var(--panel);border:2px solid var(--line);border-radius:16px;
+    padding:14px;box-shadow:0 8px 28px rgba(218,41,28,.10);z-index:10;
+    -webkit-overflow-scrolling:touch;
+  }
+  h1{font-size:18px;color:var(--mcd-red);display:flex;align-items:center;gap:8px;}
+  h1 .logo{width:22px;height:22px;background:var(--mcd-yellow);border-radius:6px;
+    display:inline-flex;align-items:center;justify-content:center;font-weight:900;color:var(--mcd-red);font-size:14px;}
+  .sub{font-size:11px;color:#999;margin:4px 0 12px;}
+  .sec{margin-bottom:14px;}
+  .sec-title{font-size:12px;font-weight:700;color:var(--mcd-dark);margin-bottom:6px;
+    border-left:3px solid var(--mcd-yellow);padding-left:6px;}
+  .btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+  .btn-grid.cols3{grid-template-columns:1fr 1fr 1fr;}
+  button{
+    border:1.5px solid var(--line);background:#FFFDF7;border-radius:10px;padding:9px 6px;
+    font-size:12px;cursor:pointer;transition:all .15s;color:var(--mcd-dark);
+    touch-action:manipulation;user-select:none;-webkit-user-select:none;
+  }
+  button:hover{border-color:var(--mcd-yellow);background:#FFF6DC;}
+  button.active{border-color:var(--mcd-red);background:#FDECEA;color:var(--mcd-red);font-weight:700;}
+  button.primary{background:var(--mcd-red);color:#fff;border-color:var(--mcd-red);font-weight:700;}
+  button.primary:hover{background:#B82114;}
+  button.yellow{background:var(--mcd-yellow);border-color:var(--mcd-yellow);font-weight:700;color:var(--mcd-dark);}
+  button.wide{grid-column:1 / -1;}
+  #modeTabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:14px;}
+  #stats{font-size:12px;line-height:1.9;color:#555;background:#FFFDF7;border:1px dashed var(--line);
+    border-radius:10px;padding:8px 10px;}
+  #stats b{color:var(--mcd-red);}
+  .hint{font-size:11px;color:#888;line-height:1.7;background:#FFF6DC;border-radius:10px;padding:8px 10px;}
+  .hint kbd{background:#fff;border:1px solid #ddd;border-radius:4px;padding:0 4px;font-size:10px;}
+  #toast{
+    position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--mcd-dark);color:#fff;padding:10px 20px;border-radius:24px;font-size:13px;
+    opacity:0;transition:all .3s;z-index:30;pointer-events:none;max-width:86vw;text-align:center;
+  }
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  /* 挑战 HUD */
+  #hud{
+    position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:9;display:none;
+    background:rgba(255,255,255,.94);border:2px solid var(--line);border-radius:14px;
+    padding:10px 16px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.08);min-width:260px;
+  }
+  #hud .row{display:flex;justify-content:space-between;gap:16px;font-size:13px;margin:2px 0;}
+  #hud .row span:last-child{font-weight:700;color:var(--mcd-red);}
+  #stabBar{height:8px;background:#F3E9D2;border-radius:4px;overflow:hidden;margin-top:6px;}
+  #stabFill{height:100%;width:0%;background:linear-gradient(90deg,#DA291C,#FFC72C,#7BB661);transition:width .2s;}
+  #windTag{display:none;font-size:12px;color:#B82114;font-weight:700;margin-top:4px;}
+  /* 手机悬浮控件 */
+  #panelToggle{
+    position:fixed;top:12px;left:12px;z-index:21;display:none;
+    width:44px;height:44px;border-radius:12px;font-size:20px;line-height:1;
+    background:var(--panel);border:2px solid var(--line);
+  }
+  #touchPad{
+    position:fixed;right:12px;bottom:16px;z-index:20;display:none;
+    grid-template-columns:repeat(2,52px);gap:8px;
+  }
+  #touchPad button{
+    width:52px;height:52px;border-radius:14px;font-size:20px;
+    background:rgba(255,255,255,.92);border:2px solid var(--line);
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+  }
+  .hidden{display:none !important;}
+  /* 胜利彩带 */
+  .confetti{position:fixed;top:-12px;width:9px;height:15px;z-index:40;pointer-events:none;
+    animation:confFall linear forwards;border-radius:2px;}
+  @keyframes confFall{
+    0%{transform:translateY(0) rotate(0deg);opacity:1;}
+    100%{transform:translateY(105vh) rotate(720deg);opacity:0.7;}
+  }
+  #bpSelect{
+    width:100%;border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;
+    font-size:12px;background:#FFFDF7;color:var(--mcd-dark);margin-bottom:6px;
+  }
+  /* 手机适配 */
+  @media (max-width:768px){
+    #panel{width:calc(100vw - 24px);max-height:52vh;top:auto;bottom:12px;left:12px;}
+    #panel.collapsed{transform:translateY(calc(100% + 16px));transition:transform .25s;}
+    #panel{transition:transform .25s;}
+    #panelToggle{display:block;}
+    #touchPad.on{display:grid;}
+    #hud{top:64px;min-width:220px;padding:8px 12px;}
+    #hud .row{font-size:12px;}
+  }
+</style>
+</head>
+<body>
+<div id="scene"></div>
+
+<button id="panelToggle">🍟</button>
+
+<div id="hud">
+  <div class="row"><span>🎯 目标高度</span><span id="hudGoal">-</span></div>
+  <div class="row"><span>📏 当前高度</span><span id="hudHeight">0.00 m</span></div>
+  <div class="row"><span>🍟 已用薯条</span><span id="hudFries">0</span></div>
+  <div class="row"><span>⏱️ 稳定计时</span><span id="hudTimer">0.0 / 5.0 s</span></div>
+  <div id="stabBar"><div id="stabFill"></div></div>
+  <div id="windTag">💨 妖风来袭！扶稳你的塔！</div>
+</div>
+
+<div id="touchPad">
+  <button data-tp="yawL">↺</button>
+  <button data-tp="yawR">↻</button>
+  <button data-tp="tiltUp">⤴️</button>
+  <button data-tp="tiltDown">⤵️</button>
+</div>
+
+<div id="panel">
+  <h1><span class="logo">M</span>薯条建筑师</h1>
+  <div class="sub">FriesCraft 重力挑战版 · 真物理，会塌的那种</div>
+
+  <div id="modeTabs">
+    <button data-mode="gallery" class="active">📖 图鉴</button>
+    <button data-mode="sandbox">🖐️ 自由搭</button>
+    <button data-mode="tower">🗼 挑战</button>
+  </div>
+
+  <!-- 图鉴模式 -->
+  <div id="ui-gallery">
+    <div class="sec">
+      <div class="sec-title">🦖 12 种官方 & 创意造型</div>
+      <div class="btn-grid">
+        <button data-preset="triceratops">官方三角龙</button>
+        <button data-preset="maidadlong">网红麦当龙</button>
+        <button data-preset="turtle">薯条小乌龟</button>
+        <button data-preset="crab">麦当大闸蟹</button>
+        <button data-preset="arches">金拱门 M</button>
+        <button data-preset="heart">薯条爱心</button>
+        <button data-preset="rocket">薯条火箭</button>
+        <button data-preset="octopus">薯条章鱼</button>
+        <button data-preset="cactus">仙人掌盆栽</button>
+        <button data-preset="cake">生日蜡烛蛋糕</button>
+        <button data-preset="snowman">麦乐鸡雪人</button>
+        <button data-preset="crown">麦门皇冠</button>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">💡 图鉴玩法</div>
+      <div class="hint">陈列室里看官方配方和创意造型，点选积木可拖动微调（<kbd>Q</kbd><kbd>E</kbd> 旋转、<kbd>+</kbd><kbd>-</kbd> 调长短）。<br>想上手真搭？去「自由搭」和「挑战」——那里的薯条有重力，会倒、会滑、会塌。</div>
+    </div>
+  </div>
+
+  <!-- 自由搭建模式 -->
+  <div id="ui-sandbox" class="hidden">
+    <div class="sec">
+      <div class="sec-title">🍟 选积木，点餐盘放置</div>
+      <div class="btn-grid cols3">
+        <button data-spawn="fryS">短薯条</button>
+        <button data-spawn="fryM" class="active">中薯条</button>
+        <button data-spawn="fryL">长薯条</button>
+        <button data-spawn="nugget">麦乐鸡</button>
+        <button data-spawn="patty">肉饼</button>
+        <button id="btnUndo">↩️ 撤销</button>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">📐 蓝图模式（照着拼）</div>
+      <select id="bpSelect">
+        <option value="triceratops">🦖 官方三角龙</option>
+        <option value="maidadlong">🦕 网红麦当龙</option>
+        <option value="turtle">🐢 薯条小乌龟</option>
+        <option value="crab">🦀 麦当大闸蟹</option>
+        <option value="arches">🟡 金拱门 M</option>
+        <option value="heart">❤️ 薯条爱心</option>
+        <option value="rocket">🚀 薯条火箭</option>
+        <option value="octopus">🐙 薯条章鱼</option>
+        <option value="cactus">🌵 仙人掌盆栽</option>
+        <option value="cake">🎂 生日蜡烛蛋糕</option>
+        <option value="snowman">⛄ 麦乐鸡雪人</option>
+        <option value="crown">👑 麦门皇冠</option>
+      </select>
+      <div class="btn-grid">
+        <button id="btnBlueprint" class="wide">👁️ 显示蓝图</button>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">📊 物理数据</div>
+      <div id="stats">餐盘空空如也</div>
+    </div>
+    <div class="sec">
+      <div class="btn-grid">
+        <button id="btnShareSand" class="yellow">📣 分享我的造型</button>
+        <button id="btnClearSand">🧹 清空</button>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">⌨️ 操作</div>
+      <div class="hint">手指/鼠标在餐盘上移动 → 幽灵预览，<b>轻点一下</b>放置（有重力！）。<br>右下角悬浮按钮调整方向；桌面端 <kbd>Q</kbd><kbd>E</kbd> 旋转、<kbd>W</kbd><kbd>S</kbd> 倾倒。<br>小技巧：单根薯条立不住，三根斜靠成"帐篷"最稳；先铺肉饼底座更容易。</div>
+    </div>
+  </div>
+
+  <!-- 高塔挑战模式 -->
+  <div id="ui-tower" class="hidden">
+    <div class="sec">
+      <div class="sec-title">🗼 选难度</div>
+      <div class="btn-grid cols3">
+        <button data-level="0" class="active">新手<br>0.55m</button>
+        <button data-level="1">老手<br>0.80m</button>
+        <button data-level="2">妖风<br>1.05m</button>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="btn-grid">
+        <button id="btnStartTower" class="primary wide">▶️ 开始挑战</button>
+        <button id="btnShareTower" class="yellow">📣 分享战绩</button>
+        <button id="btnResetTower">🔄 重来</button>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">📜 规则</div>
+      <div class="hint">用有限薯条搭塔，达到目标高度并保持 <b>5 秒不倒</b> 即胜利。<br>· 新手：20 根，无风<br>· 老手：16 根，轻风扰动<br>· 妖风：14 根，随机强风突袭 💨<br>用越少薯条达标越牛，最好成绩自动存在本机。</div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="btn-grid">
+      <button id="btnShot" class="yellow wide">📸 保存作品截图</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+  "cannon-es": "https://cdn.jsdelivr.net/npm/cannon-es@0.20.0/dist/cannon-es.js"
+} }
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import * as CANNON from 'cannon-es';
+
+/* ================= 基础场景 ================= */
+const container = document.getElementById('scene');
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xFFF3D6);
+
+const camera = new THREE.PerspectiveCamera(45, innerWidth/innerHeight, 0.1, 100);
+camera.position.set(1.7, 1.5, 2.3);
+
+const renderer = new THREE.WebGLRenderer({ antialias:true, preserveDrawingBuffer:true });
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+container.appendChild(renderer.domElement);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.maxPolarAngle = Math.PI/2 - 0.05;
+controls.minDistance = 0.8; controls.maxDistance = 8;
+controls.target.set(0, 0.3, 0);
+
+scene.add(new THREE.AmbientLight(0xffffff, 0.75));
+const sun = new THREE.DirectionalLight(0xffffff, 1.6);
+sun.position.set(2.5, 4, 1.5);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+sun.shadow.camera.left = -2; sun.shadow.camera.right = 2;
+sun.shadow.camera.top = 2; sun.shadow.camera.bottom = -2;
+scene.add(sun);
+const fill = new THREE.DirectionalLight(0xFFE9B0, 0.4);
+fill.position.set(-2, 2, -2); scene.add(fill);
+
+const table = new THREE.Mesh(
+  new THREE.CylinderGeometry(3.2, 3.2, 0.06, 64),
+  new THREE.MeshStandardMaterial({ color:0xDA291C, roughness:0.8 })
+);
+table.position.y = -0.08; table.receiveShadow = true; scene.add(table);
+const tray = new THREE.Mesh(
+  new THREE.CylinderGeometry(1.05, 1.0, 0.045, 64),
+  new THREE.MeshStandardMaterial({ color:0xF5F0E6, roughness:0.6 })
+);
+tray.position.y = -0.025; tray.receiveShadow = true; scene.add(tray);
+const paper = new THREE.Mesh(
+  new THREE.CircleGeometry(0.92, 64),
+  new THREE.MeshStandardMaterial({ color:0xFFFDF4, roughness:0.95 })
+);
+paper.rotation.x = -Math.PI/2; paper.position.y = 0.001; paper.receiveShadow = true; scene.add(paper);
+
+/* ================= 物理世界 ================= */
+const world = new CANNON.World({ gravity: new CANNON.Vec3(0, -18, 0) });
+world.broadphase = new CANNON.SAPBroadphase(world);
+world.allowSleep = true;
+const fryPhysMat = new CANNON.Material('fry');
+const groundPhysMat = new CANNON.Material('ground');
+let friction = 0.55;
+function rebuildContact(){
+  world.contactmaterials.length = 0;
+  world.addContactMaterial(new CANNON.ContactMaterial(fryPhysMat, groundPhysMat, { friction, restitution: 0.02 }));
+  world.addContactMaterial(new CANNON.ContactMaterial(fryPhysMat, fryPhysMat, { friction: friction*0.9, restitution: 0.02 }));
+}
+rebuildContact();
+
+const groundBody = new CANNON.Body({ mass: 0, material: groundPhysMat, shape: new CANNON.Plane() });
+groundBody.quaternion.setFromEuler(-Math.PI/2, 0, 0);
+world.addBody(groundBody);
+/* 餐盘边缘隐形围栏 */
+const wallBody = new CANNON.Body({ mass: 0, material: groundPhysMat });
+for(let i=0;i<12;i++){
+  const a = i/12*Math.PI*2;
+  const box = new CANNON.Box(new CANNON.Vec3(0.02, 0.5, 0.3));
+  wallBody.addShape(box, new CANNON.Vec3(Math.cos(a)*1.0, 0.5, Math.sin(a)*1.0), new CANNON.Quaternion().setFromEuler(0, -a, 0));
+}
+world.addBody(wallBody);
+
+/* ================= 积木 ================= */
+const FRY_COLORS = [0xF2C14E, 0xEFBB40, 0xF5CA63, 0xEDB53A, 0xF7D27A];
+const fryGeo = new THREE.BoxGeometry(0.085, 1, 0.085);
+const nugGeo = new THREE.SphereGeometry(0.24, 28, 20);
+const pattyGeo = new THREE.CylinderGeometry(0.34, 0.34, 0.15, 28);
+
+let blocks = [];   // {mesh, body|null, kind, len}
+let selected = null;
+let mode = 'gallery';
+
+function makeFryMesh(len){
+  const c = FRY_COLORS[Math.floor(Math.random()*FRY_COLORS.length)];
+  const m = new THREE.Mesh(fryGeo, new THREE.MeshStandardMaterial({ color:c, roughness:0.7 }));
+  m.scale.y = len; m.castShadow = m.receiveShadow = true;
+  return m;
+}
+function makeNuggetMesh(scale=1){
+  const m = new THREE.Mesh(nugGeo, new THREE.MeshStandardMaterial({ color:0xC98F4E, roughness:0.9 }));
+  m.scale.set(1.15*scale, 0.72*scale, 0.95*scale);
+  m.castShadow = m.receiveShadow = true;
+  return m;
+}
+function makePattyMesh(){
+  const m = new THREE.Mesh(pattyGeo, new THREE.MeshStandardMaterial({ color:0xE8A33D, roughness:0.75 }));
+  m.castShadow = m.receiveShadow = true;
+  return m;
+}
+
+function spawnPhysical(kind, pos, quat){
+  let mesh, body;
+  if(kind==='nugget'){
+    mesh = makeNuggetMesh();
+    body = new CANNON.Body({ mass:0.09, material:fryPhysMat, shape:new CANNON.Sphere(0.22) });
+  } else if(kind==='patty'){
+    mesh = makePattyMesh();
+    body = new CANNON.Body({ mass:0.12, material:fryPhysMat,
+      shape:new CANNON.Cylinder(0.34, 0.34, 0.15, 12) });
+  } else {
+    const len = kind==='fryS'?0.24 : kind==='fryL'?0.56 : 0.40;
+    mesh = makeFryMesh(len);
+    body = new CANNON.Body({ mass:0.03, material:fryPhysMat,
+      shape:new CANNON.Box(new CANNON.Vec3(0.0425, len/2, 0.0425)) });
+    mesh.userData.len = len;
+  }
+  mesh.userData.kind = kind;
+  body.position.set(pos.x, pos.y, pos.z);
+  if(quat) body.quaternion.set(quat.x, quat.y, quat.z, quat.w);
+  body.sleepSpeedLimit = 0.15; body.sleepTimeLimit = 0.6;
+  scene.add(mesh); world.addBody(body);
+  const rec = { mesh, body, kind, len: mesh.userData.len||0 };
+  blocks.push(rec);
+  return rec;
+}
+function removeBlock(rec){
+  scene.remove(rec.mesh);
+  if(rec.body) world.removeBody(rec.body);
+  const i = blocks.indexOf(rec); if(i>=0) blocks.splice(i,1);
+}
+function clearAll(){
+  [...blocks].forEach(removeBlock);
+  blocks = []; selected = null;
+}
+
+/* ================= 图鉴（静态预设） ================= */
+/* 蓝图模式：预设以半透明蓝色虚影呈现，供用户照着拼 */
+const bpMat = new THREE.MeshBasicMaterial({ color:0x4A90D9, transparent:true, opacity:0.20, depthWrite:false });
+let blueprintMode = false;
+let blueprints = [];
+
+function placeStaticFry(center, dir, len){
+  const f = makeFryMesh(len);
+  f.position.copy(center);
+  f.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), dir.clone().normalize());
+  f.userData = { kind:'fry', len };
+  if(blueprintMode){ f.material = bpMat; f.castShadow = f.receiveShadow = false; scene.add(f); blueprints.push(f); return; }
+  scene.add(f);
+  blocks.push({ mesh:f, body:null, kind:'fry', len });
+}
+function placeStaticNugget(pos, scale=1){
+  const n = makeNuggetMesh(scale); n.position.copy(pos);
+  n.userData = { kind:'nugget' };
+  if(blueprintMode){ n.material = bpMat; n.castShadow = n.receiveShadow = false; scene.add(n); blueprints.push(n); return; }
+  scene.add(n); blocks.push({ mesh:n, body:null, kind:'nugget' });
+}
+function placeStaticPatty(pos, sx=1, sy=1, sz=1){
+  const p = makePattyMesh(); p.position.copy(pos); p.scale.set(sx,sy,sz);
+  p.userData = { kind:'patty' };
+  if(blueprintMode){ p.material = bpMat; p.castShadow = p.receiveShadow = false; scene.add(p); blueprints.push(p); return; }
+  scene.add(p); blocks.push({ mesh:p, body:null, kind:'patty' });
+}
+function clearBlueprint(){
+  blueprints.forEach(m=>scene.remove(m));
+  blueprints = [];
+}
+function toggleBlueprint(){
+  const btn = document.getElementById('btnBlueprint');
+  if(blueprints.length){
+    clearBlueprint();
+    btn.textContent = '👁️ 显示蓝图';
+    return;
+  }
+  blueprintMode = true;
+  presets[document.getElementById('bpSelect').value]();
+  blueprintMode = false;
+  btn.textContent = '🙈 隐藏蓝图';
+  toast('蓝图已就位：照着蓝色虚影拼，拼完可隐藏');
+}
+const V = (x,y,z)=>new THREE.Vector3(x,y,z);
+
+const presets = {
+  triceratops(){
+    placeStaticNugget(V(0,0.30,0));
+    placeStaticNugget(V(0.46,0.62,0), 0.62);
+    placeStaticFry(V(0.30,0.47,0), V(0.55,0.83,0), 0.42);
+    placeStaticFry(V(0.17,0.26, 0.13), V(0.15,-1, 0.25), 0.34);
+    placeStaticFry(V(0.17,0.26,-0.13), V(0.15,-1,-0.25), 0.34);
+    placeStaticFry(V(-0.19,0.26, 0.13), V(-0.15,-1, 0.25), 0.34);
+    placeStaticFry(V(-0.19,0.26,-0.13), V(-0.15,-1,-0.25), 0.34);
+    placeStaticFry(V(0.56,0.74, 0.06), V(0.85,0.5, 0.15), 0.20);
+    placeStaticFry(V(0.56,0.74,-0.06), V(0.85,0.5,-0.15), 0.20);
+    placeStaticFry(V(0.60,0.66,0), V(0.95,0.2,0), 0.16);
+    placeStaticFry(V(-0.35,0.33,0), V(-0.85,0.45,0), 0.40);
+    placeStaticFry(V(-0.14,0.47,0), V(-0.3,1, 0.1), 0.16);
+    placeStaticFry(V(-0.02,0.49,0), V(-0.1,1,-0.1), 0.17);
+    placeStaticFry(V(0.10,0.47,0), V(0.1,1, 0.1), 0.16);
+    placeStaticFry(V(0.20,0.44,0), V(0.3,1,-0.05), 0.15);
+  },
+  maidadlong(){
+    placeStaticNugget(V(0,0.28,0));
+    placeStaticFry(V(0.14,0.22, 0.12), V(0.1,-1, 0.2), 0.26);
+    placeStaticFry(V(0.14,0.22,-0.12), V(0.1,-1,-0.2), 0.26);
+    placeStaticFry(V(-0.14,0.22, 0.12), V(-0.1,-1, 0.2), 0.26);
+    placeStaticFry(V(-0.14,0.22,-0.12), V(-0.1,-1,-0.2), 0.26);
+    placeStaticFry(V(0.30,0.42,0), V(0.5,0.85,0), 0.30);
+    placeStaticFry(V(0.42,0.60,0), V(0.9,0.3,0), 0.20);
+    placeStaticFry(V(-0.33,0.32,0), V(-0.85,0.4,0), 0.36);
+  },
+  turtle(){
+    placeStaticNugget(V(0,0.20,0));
+    for(let i=0;i<7;i++){
+      const a = i/7*Math.PI*2;
+      placeStaticFry(V(Math.cos(a)*0.13,0.30,Math.sin(a)*0.13), V(Math.cos(a)*0.9,0.55,Math.sin(a)*0.9), 0.22);
+    }
+    placeStaticFry(V(0,0.34,0), V(0,1,0), 0.20);
+    placeStaticFry(V(0.24,0.12, 0.14), V(0.6,-0.8, 0.4), 0.14);
+    placeStaticFry(V(0.24,0.12,-0.14), V(0.6,-0.8,-0.4), 0.14);
+    placeStaticFry(V(-0.24,0.12, 0.14), V(-0.6,-0.8, 0.4), 0.14);
+    placeStaticFry(V(-0.24,0.12,-0.14), V(-0.6,-0.8,-0.4), 0.14);
+  },
+  crab(){
+    placeStaticPatty(V(0,0.30,0));
+    for(let i=0;i<4;i++){
+      const off = -0.05 + i*0.10;
+      placeStaticFry(V(-0.42,0.26,off), V(-0.85,-0.35,(i-1.5)*0.25), 0.34);
+      placeStaticFry(V( 0.42,0.26,off), V( 0.85,-0.35,(i-1.5)*0.25), 0.34);
+    }
+    placeStaticFry(V(-0.20,0.34,0.40), V(-0.35,0.2,0.9), 0.34);
+    placeStaticFry(V( 0.20,0.34,0.40), V( 0.35,0.2,0.9), 0.34);
+    placeStaticFry(V(-0.30,0.40,0.56), V(-0.7,0.4,0.55), 0.16);
+    placeStaticFry(V( 0.30,0.40,0.56), V( 0.7,0.4,0.55), 0.16);
+    placeStaticFry(V(-0.08,0.42,0.28), V(-0.15,1,0.3), 0.14);
+    placeStaticFry(V( 0.08,0.42,0.28), V( 0.15,1,0.3), 0.14);
+  },
+  arches(){
+    const n = 13, span = 1.15;
+    for(let i=0;i<n;i++){
+      const x = -span/2 + (i/(n-1))*span;
+      const h1 = 0.72*Math.sqrt(Math.max(0, 1-Math.pow((x+0.29)/0.30, 2)));
+      const h2 = 0.72*Math.sqrt(Math.max(0, 1-Math.pow((x-0.29)/0.30, 2)));
+      placeStaticFry(V(x, Math.max(h1,h2,0.12)/2, 0), V(0,1,0), Math.max(h1,h2,0.12));
+    }
+  },
+  heart(){
+    const n = 14, pts = [];
+    for(let i=0;i<n;i++){
+      const t = i/n*Math.PI*2;
+      const x = 16*Math.pow(Math.sin(t),3);
+      const y = 13*Math.cos(t) - 5*Math.cos(2*t) - 2*Math.cos(3*t) - Math.cos(4*t);
+      pts.push(V(x/34, 0, -y/40));
+    }
+    for(let i=0;i<n;i++){
+      const p = pts[i], q = pts[(i+1)%n];
+      const dir = q.clone().sub(p); dir.y = 0;
+      const mid = p.clone().add(q).multiplyScalar(0.5); mid.y = 0.05;
+      placeStaticFry(mid, dir, 0.16);
+    }
+  },
+  rocket(){
+    placeStaticFry(V( 0.07,0.40, 0.07), V(0,1,0), 0.80);
+    placeStaticFry(V( 0.07,0.40,-0.07), V(0,1,0), 0.80);
+    placeStaticFry(V(-0.07,0.40, 0.07), V(0,1,0), 0.80);
+    placeStaticFry(V(-0.07,0.40,-0.07), V(0,1,0), 0.80);
+    placeStaticFry(V( 0.06,0.86, 0.06), V(-0.35,1,-0.35), 0.24);
+    placeStaticFry(V( 0.06,0.86,-0.06), V(-0.35,1, 0.35), 0.24);
+    placeStaticFry(V(-0.06,0.86, 0.06), V( 0.35,1,-0.35), 0.24);
+    placeStaticFry(V(-0.06,0.86,-0.06), V( 0.35,1, 0.35), 0.24);
+    for(let i=0;i<3;i++){
+      const a = i/3*Math.PI*2 + Math.PI/6;
+      placeStaticFry(V(Math.cos(a)*0.13,0.16,Math.sin(a)*0.13), V(Math.cos(a)*0.9,-0.45,Math.sin(a)*0.9), 0.30);
+    }
+  },
+  octopus(){
+    placeStaticNugget(V(0,0.30,0));
+    for(let i=0;i<8;i++){
+      const a = i/8*Math.PI*2;
+      placeStaticFry(V(Math.cos(a)*0.36,0.05,Math.sin(a)*0.36), V(Math.cos(a),0,Math.sin(a)), 0.30);
+    }
+  },
+  cactus(){
+    placeStaticPatty(V(0,0.05,0), 0.8, 0.7, 0.8);
+    placeStaticFry(V(0,0.42,0), V(0,1,0), 0.62);
+    placeStaticFry(V(-0.16,0.44,0), V(-1,0,0), 0.20);
+    placeStaticFry(V(-0.26,0.56,0), V(0,1,0), 0.24);
+    placeStaticFry(V(0.16,0.34,0), V(1,0,0), 0.20);
+    placeStaticFry(V(0.26,0.45,0), V(0,1,0), 0.22);
+    placeStaticFry(V(0,0.76,0), V(1,0.15,0), 0.12);
+  },
+  cake(){
+    placeStaticPatty(V(0,0.075,0), 1.1, 1, 1.1);
+    placeStaticPatty(V(0,0.21,0), 0.75, 0.8, 0.75);
+    for(let i=0;i<5;i++){
+      const a = i/5*Math.PI*2;
+      placeStaticFry(V(Math.cos(a)*0.16,0.36,Math.sin(a)*0.16), V(0,1,0), 0.16);
+    }
+    placeStaticFry(V(0,0.38,0), V(0,1,0), 0.20);
+  },
+  snowman(){
+    placeStaticNugget(V(0,0.18,0));
+    placeStaticNugget(V(0,0.46,0), 0.68);
+    placeStaticFry(V(-0.32,0.28,0), V(-0.9,0.35, 0.15), 0.30);
+    placeStaticFry(V( 0.32,0.28,0), V( 0.9,0.35,-0.15), 0.30);
+    placeStaticFry(V(0,0.46,0.22), V(0,-0.05,1), 0.16);
+    placeStaticFry(V(0,0.60,0), V(1,0,0.2), 0.22);
+  },
+  crown(){
+    const n = 9, R = 0.32;
+    for(let i=0;i<n;i++){
+      const a = i/n*Math.PI*2;
+      const h = i%2===0 ? 0.42 : 0.24;
+      placeStaticFry(V(Math.cos(a)*R, h/2, Math.sin(a)*R), V(0,1,0), h);
+    }
+    placeStaticNugget(V(0,0.10,0), 0.55);
+  },
+  clear(){}
+};
+
+/* ================= 幽灵预览 ================= */
+const ghostMat = new THREE.MeshStandardMaterial({ color:0xF2C14E, transparent:true, opacity:0.45, roughness:0.7 });
+let ghost = null, ghostKind = 'fryM', ghostYaw = 0, ghostTilt = 0;
+const platePlane = new THREE.Plane(V(0,1,0), 0);
+
+function ghostLen(){ return ghostKind==='fryS'?0.24 : ghostKind==='fryL'?0.56 : 0.40; }
+function ensureGhost(){
+  if(ghost){ scene.remove(ghost); ghost = null; }
+  if(mode==='gallery') return;
+  let g;
+  if(ghostKind==='nugget') g = new THREE.Mesh(nugGeo, ghostMat);
+  else if(ghostKind==='patty') g = new THREE.Mesh(pattyGeo, ghostMat);
+  else { g = new THREE.Mesh(fryGeo, ghostMat); g.scale.y = ghostLen(); }
+  g.visible = false;
+  scene.add(g); ghost = g;
+}
+function updateGhostPose(){
+  if(!ghost) return;
+  ghost.rotation.set(ghostTilt, ghostYaw, 0);
+  if(ghostKind.startsWith('fry')){
+    const l = ghostLen();
+    ghost.position.y = Math.cos(ghostTilt)*l/2 + 0.01;
+  } else if(ghostKind==='nugget') ghost.position.y = 0.18;
+  else ghost.position.y = 0.08;
+}
+
+/* ================= 重心投影指示 ================= */
+const comDot = new THREE.Mesh(
+  new THREE.SphereGeometry(0.025, 12, 8),
+  new THREE.MeshBasicMaterial({ color:0x7BB661 })
+);
+const comRing = new THREE.Mesh(
+  new THREE.RingGeometry(0.055, 0.07, 32),
+  new THREE.MeshBasicMaterial({ color:0x7BB661, side:THREE.DoubleSide, transparent:true, opacity:0.65 })
+);
+comRing.rotation.x = -Math.PI/2;
+comDot.visible = comRing.visible = false;
+scene.add(comDot, comRing);
+const COM_GREEN = new THREE.Color(0x7BB661), COM_ORANGE = new THREE.Color(0xFF8C42), COM_RED = new THREE.Color(0xDA291C);
+function updateComIndicator(stab){
+  const show = mode!=='gallery' && blocks.length > 0;
+  comDot.visible = comRing.visible = show;
+  if(!show) return;
+  let m = 0, x = 0, z = 0;
+  blocks.forEach(b=>{
+    if(!b.body) return;
+    m += b.body.mass;
+    x += b.body.mass * b.body.position.x;
+    z += b.body.mass * b.body.position.z;
+  });
+  if(m <= 0) return;
+  comDot.position.set(x/m, 0.02, z/m);
+  comRing.position.set(x/m, 0.015, z/m);
+  const c = stab > 0.85 ? COM_GREEN : stab > 0.55 ? COM_ORANGE : COM_RED;
+  comDot.material.color.copy(c);
+  comRing.material.color.copy(c);
+}
+
+/* ================= 胜利彩带 ================= */
+function confetti(){
+  const colors = ['#DA291C','#FFC72C','#7BB661','#4A90D9','#FF8C42'];
+  for(let i=0;i<80;i++){
+    const s = document.createElement('div');
+    s.className = 'confetti';
+    s.style.left = Math.random()*100+'vw';
+    s.style.background = colors[i%colors.length];
+    s.style.animationDuration = (1.6+Math.random()*1.6)+'s';
+    s.style.animationDelay = (Math.random()*0.4)+'s';
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(), 3900);
+  }
+}
+
+/* ================= 高塔挑战 ================= */
+const LEVELS = [
+  { name:'新手', goal:0.55, budget:20, wind:false, friction:0.6 },
+  { name:'老手', goal:0.80, budget:16, wind:true,  windMax:0.05, friction:0.5 },
+  { name:'妖风', goal:1.05, budget:14, wind:true,  windMax:0.14, friction:0.42 },
+];
+let level = 0, towerRunning = false;
+let stableTime = 0, windTimer = 0, windActive = 0;
+let best = {};
+try { best = JSON.parse(localStorage.getItem('friescraft_best')||'{}'); } catch(e){}
+
+function startTower(){
+  clearAll();
+  towerRunning = true; stableTime = 0; windTimer = 3; windActive = 0;
+  friction = LEVELS[level].friction; rebuildContact();
+  document.getElementById('hud').style.display = 'block';
+  document.getElementById('hudGoal').textContent = LEVELS[level].goal.toFixed(2)+' m（'+LEVELS[level].name+'）';
+  toast(`挑战开始：${LEVELS[level].budget} 根薯条，搭到 ${LEVELS[level].goal}m 并稳住 5 秒！`);
+  collapsePanelIfMobile();
+}
+function endTower(){
+  towerRunning = false;
+  confetti();
+  const h = towerHeight();
+  const used = blocks.filter(b=>b.kind.startsWith('fry')).length;
+  const key = 'L'+level;
+  if(!best[key] || used < best[key].fries){
+    best[key] = { fries:used, height:+h.toFixed(2) };
+    try{ localStorage.setItem('friescraft_best', JSON.stringify(best)); }catch(e){}
+    toast(`🏆 新纪录！${used} 根薯条搭到 ${h.toFixed(2)}m！`);
+  } else {
+    toast(`🎉 挑战成功！${used} 根薯条，${h.toFixed(2)}m。本难度纪录 ${best[key].fries} 根。`);
+  }
+  document.getElementById('hud').style.display = 'none';
+}
+function towerHeight(){
+  let h = 0;
+  blocks.forEach(b=>{
+    if(!b.body) return;
+    b.body.updateAABB();
+    h = Math.max(h, b.body.aabb.upperBound.y);
+  });
+  return h;
+}
+function avgMotion(){
+  if(!blocks.length) return 0;
+  let s = 0, n = 0;
+  blocks.forEach(b=>{ if(b.body){ s += b.body.velocity.length() + b.body.angularVelocity.length()*0.1; n++; } });
+  return n ? s/n : 0;
+}
+
+/* ================= 交互（鼠标+触屏统一 pointer 事件） ================= */
+const ray = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+let downInfo = null;
+let draggingGallery = false;
+const dragOffset = new THREE.Vector3();
+
+function setMouse(e){
+  const r = renderer.domElement.getBoundingClientRect();
+  mouse.set(((e.clientX-r.left)/r.width)*2-1, -((e.clientY-r.top)/r.height)*2+1);
+}
+
+renderer.domElement.addEventListener('pointerdown', e=>{
+  setMouse(e); ray.setFromCamera(mouse, camera);
+  downInfo = { x:e.clientX, y:e.clientY, t:Date.now() };
+  if(mode==='gallery'){
+    const meshes = blocks.map(b=>b.mesh);
+    const hits = ray.intersectObjects(meshes, false);
+    if(hits.length){
+      select(hits[0].object);
+      draggingGallery = true; controls.enabled = false;
+      const p = new THREE.Vector3();
+      ray.ray.intersectPlane(platePlane, p);
+      dragOffset.copy(hits[0].object.position).sub(p);
+    } else select(null);
+  } else if(ghost){
+    // 触屏没有 hover：按下瞬间先把幽灵放到触点，保证轻点即可放置
+    const p = new THREE.Vector3();
+    if(ray.ray.intersectPlane(platePlane, p)){
+      p.x = THREE.MathUtils.clamp(p.x, -0.92, 0.92);
+      p.z = THREE.MathUtils.clamp(p.z, -0.92, 0.92);
+      ghost.visible = true;
+      ghost.position.x = p.x; ghost.position.z = p.z;
+      updateGhostPose();
+    }
+  }
+});
+renderer.domElement.addEventListener('pointermove', e=>{
+  setMouse(e); ray.setFromCamera(mouse, camera);
+  if(mode!=='gallery' && ghost){
+    const p = new THREE.Vector3();
+    if(ray.ray.intersectPlane(platePlane, p)){
+      p.x = THREE.MathUtils.clamp(p.x, -0.92, 0.92);
+      p.z = THREE.MathUtils.clamp(p.z, -0.92, 0.92);
+      ghost.visible = true;
+      ghost.position.x = p.x; ghost.position.z = p.z;
+      updateGhostPose();
+    } else ghost.visible = false;
+  }
+  if(draggingGallery && selected){
+    const p = new THREE.Vector3();
+    if(ray.ray.intersectPlane(platePlane, p)){
+      p.add(dragOffset);
+      selected.position.x = THREE.MathUtils.clamp(p.x, -0.95, 0.95);
+      selected.position.z = THREE.MathUtils.clamp(p.z, -0.95, 0.95);
+    }
+  }
+});
+addEventListener('pointerup', e=>{
+  draggingGallery = false; controls.enabled = true;
+  if(mode!=='gallery' && downInfo && e.target===renderer.domElement){
+    const moved = Math.hypot(e.clientX-downInfo.x, e.clientY-downInfo.y);
+    if(moved < 8 && Date.now()-downInfo.t < 400 && ghost && ghost.visible){
+      placeFromGhost();
+    }
+  }
+  downInfo = null;
+});
+
+function placeFromGhost(){
+  if(mode==='tower' && towerRunning){
+    const used = blocks.filter(b=>b.kind.startsWith('fry')).length;
+    if(ghostKind.startsWith('fry') && used >= LEVELS[level].budget){
+      toast(`薯条用完啦（${LEVELS[level].budget} 根上限），点"重来"再战`);
+      return;
+    }
+  }
+  const rec = spawnPhysical(ghostKind, ghost.position, ghost.quaternion);
+  if(rec.body){
+    rec.body.velocity.set((Math.random()-0.5)*0.05, 0, (Math.random()-0.5)*0.05);
+  }
+  updateStats();
+}
+
+function select(mesh){
+  if(selected && selected.material.emissive) selected.material.emissive.setHex(0x000000);
+  selected = mesh;
+  if(selected && selected.material.emissive) selected.material.emissive.setHex(0x553300);
+}
+
+/* 键盘（桌面端） */
+addEventListener('keydown', e=>{
+  if(e.target.tagName==='INPUT') return;
+  const k = e.key;
+  if(mode!=='gallery'){
+    if(k==='q'||k==='Q') ghostYaw += 0.15;
+    if(k==='e'||k==='E') ghostYaw -= 0.15;
+    if(k==='w'||k==='W') ghostTilt = Math.min(Math.PI/2, ghostTilt + 0.1);
+    if(k==='s'||k==='S') ghostTilt = Math.max(0, ghostTilt - 0.1);
+    updateGhostPose();
+    return;
+  }
+  if(!selected) return;
+  const ud = selected.userData;
+  if(k==='q'||k==='Q') selected.rotateOnWorldAxis(V(0,1,0),  0.12);
+  if(k==='e'||k==='E') selected.rotateOnWorldAxis(V(0,1,0), -0.12);
+  if(k==='w'||k==='W') selected.rotateOnWorldAxis(V(1,0,0),  0.10);
+  if(k==='s'||k==='S') selected.rotateOnWorldAxis(V(1,0,0), -0.10);
+  if(k==='a'||k==='A') selected.rotateOnWorldAxis(V(0,0,1),  0.10);
+  if(k==='d'||k==='D') selected.rotateOnWorldAxis(V(0,0,1), -0.10);
+  if((k==='+'||k==='=') && ud.kind==='fry'){ ud.len = Math.min(0.9, ud.len+0.03); selected.scale.y = ud.len; }
+  if((k==='-'||k==='_') && ud.kind==='fry'){ ud.len = Math.max(0.08, ud.len-0.03); selected.scale.y = ud.len; }
+  if(k==='Delete'||k==='Backspace'){
+    const rec = blocks.find(b=>b.mesh===selected);
+    if(rec) removeBlock(rec);
+    selected = null;
+  }
+});
+
+/* 触屏悬浮方向键 */
+document.querySelectorAll('#touchPad button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    const t = b.dataset.tp;
+    if(t==='yawL') ghostYaw += 0.2;
+    if(t==='yawR') ghostYaw -= 0.2;
+    if(t==='tiltUp') ghostTilt = Math.min(Math.PI/2, ghostTilt + 0.12);
+    if(t==='tiltDown') ghostTilt = Math.max(0, ghostTilt - 0.12);
+    updateGhostPose();
+  });
+});
+
+/* ================= 模式切换 & 面板 ================= */
+const modeUIs = { gallery:'ui-gallery', sandbox:'ui-sandbox', tower:'ui-tower' };
+const isMobile = matchMedia('(max-width:768px)').matches || 'ontouchstart' in window;
+
+function enterMode(m){
+  mode = m;
+  document.querySelectorAll('#modeTabs button').forEach(b=>b.classList.toggle('active', b.dataset.mode===m));
+  Object.entries(modeUIs).forEach(([k,id])=>document.getElementById(id).classList.toggle('hidden', k!==m));
+  document.getElementById('hud').style.display = 'none';
+  document.getElementById('touchPad').classList.toggle('on', isMobile && m!=='gallery');
+  towerRunning = false;
+  clearAll();
+  clearBlueprint();
+  milestones = [0.3, 0.6, 0.9, 1.2];
+  const bpBtn = document.getElementById('btnBlueprint');
+  if(bpBtn) bpBtn.textContent = '👁️ 显示蓝图';
+  friction = 0.55; rebuildContact();
+  ensureGhost();
+  if(m==='gallery'){ presets.triceratops(); }
+  if(m==='tower'){ toast('选好难度，点「开始挑战」'); }
+  updateStats();
+}
+document.querySelectorAll('#modeTabs button').forEach(b=>b.onclick=()=>enterMode(b.dataset.mode));
+document.querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>{
+  clearAll(); presets[b.dataset.preset]();
+  toast(b.textContent.trim()+' 已上桌');
+  collapsePanelIfMobile();
+});
+document.querySelectorAll('[data-spawn]').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('[data-spawn]').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  ghostKind = b.dataset.spawn; ghostTilt = 0; ensureGhost(); updateGhostPose();
+});
+document.querySelectorAll('[data-level]').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('[data-level]').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  level = +b.dataset.level;
+  if(towerRunning) startTower();
+});
+document.getElementById('btnStartTower').onclick = startTower;
+document.getElementById('btnResetTower').onclick = startTower;
+document.getElementById('btnUndo').onclick = ()=>{
+  const last = blocks[blocks.length-1];
+  if(last){ removeBlock(last); updateStats(); }
+};
+document.getElementById('btnClearSand').onclick = ()=>{ clearAll(); updateStats(); };
+document.getElementById('btnBlueprint').onclick = toggleBlueprint;
+document.getElementById('bpSelect').onchange = ()=>{
+  if(blueprints.length){ clearBlueprint(); toggleBlueprint(); }
+};
+
+const panel = document.getElementById('panel');
+document.getElementById('panelToggle').onclick = ()=>panel.classList.toggle('collapsed');
+function collapsePanelIfMobile(){ if(isMobile) panel.classList.add('collapsed'); }
+if(isMobile) panel.classList.add('collapsed');
+
+/* ================= 统计 & 分享 & 截图 ================= */
+function updateStats(){
+  const el = document.getElementById('stats');
+  if(!el) return;
+  const fries = blocks.filter(b=>b.kind.startsWith('fry')).length;
+  const others = blocks.length - fries;
+  el.innerHTML = blocks.length
+    ? `🍟 薯条 <b>${fries}</b> 根` + (others?` · 其他积木 <b>${others}</b>`:'') +
+      `<br>📏 塔高 <b>${towerHeight().toFixed(2)}</b> m · 稳定度 <b>${Math.round((1-Math.min(avgMotion()/0.6,1))*100)}%</b>`
+    : '餐盘空空如也';
+}
+function shareText(){
+  const fries = blocks.filter(b=>b.kind.startsWith('fry')).length;
+  return mode==='tower'
+    ? `我在「薯条建筑师 FriesCraft」高塔挑战用 ${fries} 根薯条搭到了 ${towerHeight().toFixed(2)}m（${LEVELS[level].name}难度）！你能超过我吗？🍟🗼`
+    : `我在「薯条建筑师 FriesCraft」用 ${fries} 根薯条搭了个 ${towerHeight().toFixed(2)}m 高的作品，物理引擎认证没塌！🍟`;
+}
+document.getElementById('btnShareSand').onclick = ()=>navigator.clipboard.writeText(shareText()).then(()=>toast('战绩已复制，去晒吧'));
+document.getElementById('btnShareTower').onclick = ()=>navigator.clipboard.writeText(shareText()).then(()=>toast('战绩已复制，去晒吧'));
+document.getElementById('btnShot').onclick = ()=>{
+  renderer.render(scene, camera);
+  const a = document.createElement('a');
+  a.href = renderer.domElement.toDataURL('image/png');
+  a.download = '薯条建筑师作品.png'; a.click();
+  toast('截图已保存');
+};
+
+/* ================= 主循环 ================= */
+const clock = new THREE.Clock();
+let statTick = 0;
+let milestones = [0.3, 0.6, 0.9, 1.2];   // 自由搭里程碑
+function loop(){
+  requestAnimationFrame(loop);
+  const dt = Math.min(clock.getDelta(), 0.05);
+
+  if(mode!=='gallery'){
+    world.step(1/60, dt, 3);
+    blocks.forEach(b=>{
+      if(b.body){
+        b.mesh.position.copy(b.body.position);
+        b.mesh.quaternion.copy(b.body.quaternion);
+      }
+    });
+    const motion = avgMotion();
+    const stabNow = Math.max(0, 1 - motion/0.6);
+    updateComIndicator(stabNow);
+    // 薯约会用完时幽灵变红
+    if(ghost){
+      const usedF = blocks.filter(b=>b.kind.startsWith('fry')).length;
+      const blocked = mode==='tower' && towerRunning && ghostKind.startsWith('fry') && usedF >= LEVELS[level].budget;
+      ghostMat.color.setHex(blocked ? 0xDA291C : 0xF2C14E);
+    }
+    if(towerRunning && LEVELS[level].wind){
+      windTimer -= dt;
+      if(windTimer <= 0){
+        windTimer = 3 + Math.random()*4;
+        windActive = 0.8;
+        document.getElementById('windTag').style.display = 'block';
+        const a = Math.random()*Math.PI*2;
+        const f = LEVELS[level].windMax;
+        blocks.forEach(b=>{
+          if(b.body) b.body.applyImpulse(new CANNON.Vec3(Math.cos(a)*f*(0.5+Math.random()), 0, Math.sin(a)*f*(0.5+Math.random())));
+        });
+      }
+      if(windActive > 0){ windActive -= dt; if(windActive<=0) document.getElementById('windTag').style.display='none'; }
+    }
+    if(mode==='tower' && towerRunning){
+      const h = towerHeight();
+      document.getElementById('hudHeight').textContent = h.toFixed(2)+' m';
+      document.getElementById('hudFries').textContent = blocks.filter(b=>b.kind.startsWith('fry')).length+' / '+LEVELS[level].budget;
+      document.getElementById('stabFill').style.width = Math.round(stabNow*100)+'%';
+      if(h >= LEVELS[level].goal && stabNow > 0.96){
+        stableTime += dt;
+        if(stableTime >= 5){ endTower(); }
+      } else stableTime = 0;
+      document.getElementById('hudTimer').textContent = stableTime.toFixed(1)+' / 5.0 s';
+    }
+    if(mode==='sandbox' && blocks.length){
+      // 里程碑鼓励
+      const h = towerHeight();
+      if(milestones.length && h >= milestones[0]){
+        const reached = milestones.shift();
+        toast(`🎉 突破 ${reached.toFixed(1)}m！继续往上，重心越低越稳`);
+      }
+      if(++statTick % 30 === 0) updateStats();
+    }
+  }
+  controls.update();
+  renderer.render(scene, camera);
+}
+
+addEventListener('resize', ()=>{
+  camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+let toastTimer;
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 3200);
+}
+
+/* 初始 */
+enterMode('gallery');
+loop();
+</script>
+</body>
+</html>
