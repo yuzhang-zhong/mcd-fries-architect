@@ -2,7 +2,9 @@
 
 > 真·物理重力的麦当劳薯条 3D 搭建游戏 —— 薯条会倒、会滑、会塌。电脑手机都能玩。
 
-📹 **演示视频**：[assets/fry-builder-demo.mp4](./assets/fry-builder-demo.mp4)
+📹 **演示视频**（真重力、会塌的那种）：
+
+![FriesCraft 演示](assets/fry-builder-demo.mp4)
 
 ## 这是什么
 
