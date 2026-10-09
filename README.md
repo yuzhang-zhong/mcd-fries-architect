@@ -6,6 +6,8 @@
 
 ![FriesCraft 演示](assets/fry-builder-demo.mp4)
 
+> 播放器没加载出来？[点这里直接观看](./assets/fry-builder-demo.mp4)
+
 ## 这是什么
 
 2026 年全网爆火的"麦当龙"玩法：把麦乐鸡当身体、薯条当四肢和尾巴，拼出各种造型。**薯条建筑师**把它做成了带真实物理引擎（cannon-es）的 3D 搭建游戏：
