@@ -34,6 +34,7 @@
   #panel::-webkit-scrollbar{width:4px;}
   #panel::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:2px;}
 
+  header .top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
   header .brand{display:flex;align-items:center;gap:9px;}
   header .logo{
     width:30px;height:30px;border-radius:10px;flex:none;
@@ -45,6 +46,11 @@
   header h1{font-size:17px;font-weight:800;color:var(--ink);letter-spacing:.02em;}
   header h1 em{font-style:normal;color:var(--red);}
   header .sub{font-size:11px;color:var(--ink-3);margin-top:5px;letter-spacing:.02em;}
+  .lang-switch{display:flex;gap:4px;flex:none;}
+  .lang-switch button{
+    height:28px;padding:0 8px;border-radius:9px;font-size:11px;font-weight:700;
+    box-shadow:none;min-width:42px;
+  }
 
   /* 分段控件（模式切换） */
   .seg{
@@ -228,9 +234,15 @@
 
 <div id="panel">
   <header>
-    <div class="brand">
-      <div class="logo">M</div>
-      <h1>薯条建筑师 <em>FriesCraft</em></h1>
+    <div class="top">
+      <div class="brand">
+        <div class="logo">M</div>
+        <h1>薯条建筑师 <em>FriesCraft</em></h1>
+      </div>
+      <div class="lang-switch">
+        <button id="btnLangZh" class="active">中文</button>
+        <button id="btnLangEn">EN</button>
+      </div>
     </div>
     <div class="sub">真物理重力 · 会倒、会滑、会塌</div>
   </header>
@@ -361,6 +373,73 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import * as CANNON from 'cannon-es';
+
+const I18N = {
+  zh: {
+    pageTitle:'薯条建筑师 FriesCraft · 重力挑战版',
+    brandTitle:'薯条建筑师 <em>FriesCraft</em>',
+    subtitle:'真物理重力 · 会倒、会滑、会塌',
+    tabs:['📖 图鉴','🖐️ 自由搭','🗼 挑战'],
+    hudLabels:['🎯 目标高度','📏 当前高度','🍟 薯条','⏱️ 稳定计时','🏆 本难度纪录'],
+    windTag:'💨 妖风来袭！扶稳你的塔！',
+    galleryTitle:'灵感图鉴 · 12 种造型',
+    galleryHowToTitle:'玩法',
+    galleryHowToHint:'陈列室里看<b>官方配方</b>和创意造型（麦当劳阿根廷官方三角龙 = 2 麦乐鸡 + 14 薯条）。点选积木可拖动微调：<kbd>Q</kbd><kbd>E</kbd> 旋转 · <kbd>W</kbd><kbd>S</kbd><kbd>A</kbd><kbd>D</kbd> 倾倒 · <kbd>+</kbd><kbd>-</kbd> 长短 · <kbd>Del</kbd> 删除。<br>想上手真搭？切「自由搭」和「挑战」——那里有重力。',
+    spawnTitle:'选积木 · 点餐盘放置',
+    blueprintTitle:'蓝图模式 · 照着拼',
+    statsTitle:'物理数据',
+    controlsTitle:'操作',
+    controlsHint:'移动出现<b>幽灵预览</b>，轻点放置（有重力！）。<br>手机：右下角 ↺↻⤴⤵ 调方向；桌面：<kbd>Q</kbd><kbd>E</kbd> 旋转 · <kbd>W</kbd><kbd>S</kbd> 倾倒。<br>技巧：单根立不住，<b>三根斜靠成"帐篷"</b>最稳；重物铺底。',
+    towerDiffTitle:'选难度',
+    towerRuleTitle:'规则',
+    towerRuleHint:'限定薯条搭塔，<b>达标且稳住 5 秒</b>获胜。<br>新手 20 根无风 · 老手 16 根轻风 · 妖风 14 根强风突袭 💨<br>用越少薯条达标越牛，纪录自动存本机。',
+    spawnButtons:{fryS:'短薯条',fryM:'中薯条',fryL:'长薯条',nugget:'麦乐鸡',patty:'肉饼'},
+    commonButtons:{undo:'↩︎ 撤销',showBlueprint:'👁️ 显示蓝图',hideBlueprint:'🙈 隐藏蓝图',shareModel:'📣 分享造型',clear:'🧹 清空',start:'▶️ 开始挑战',shareScore:'📣 分享战绩',reset:'🔄 重来',shot:'📸 截图',camera:'🎥 复位视角',muteOn:'🔇 静音',muteOff:'🔊 音效'},
+    presets:{triceratops:'官方三角龙',maidadlong:'网红麦当龙',turtle:'薯条小乌龟',crab:'麦当大闸蟹',arches:'金拱门 M',heart:'薯条爱心',rocket:'薯条火箭',octopus:'薯条章鱼',cactus:'仙人掌盆栽',cake:'生日蜡烛蛋糕',snowman:'麦乐鸡雪人',crown:'麦门皇冠'},
+    levels:['新手','老手','妖风'],
+    statsEmpty:'餐盘空空如也，选块积木开始',
+    toasts:{blueprintReady:'蓝图已就位：照着蓝色虚影拼',chooseTower:'选好难度，点「开始挑战」',viewReset:'视角已复位',copied:'战绩已复制，去晒吧',screenshotSaved:'截图已保存'},
+    share:{tower:(fries,h,l)=>`我在「薯条建筑师 FriesCraft」高塔挑战用 ${fries} 根薯条搭到了 ${h}m（${l}难度）！你能超过我吗？🍟🗼`,sandbox:(fries,h)=>`我在「薯条建筑师 FriesCraft」用 ${fries} 根薯条搭了个 ${h}m 高的作品，物理引擎认证没塌！🍟`},
+    units:{fries:'根',pieces:'件'},
+    statLabels:{fries:'🍟 薯条',height:'📏 塔高',stability:'⚖️ 稳定度'}
+  },
+  en: {
+    pageTitle:'FriesCraft · Gravity Challenge',
+    brandTitle:'FriesCraft <em>Fry Architect</em>',
+    subtitle:'Real gravity physics · tip, slide, and collapse',
+    tabs:['📖 Gallery','🖐️ Sandbox','🗼 Challenge'],
+    hudLabels:['🎯 Goal Height','📏 Current Height','🍟 Fries','⏱️ Stable Timer','🏆 Best Record'],
+    windTag:'💨 Wild wind incoming! Hold your tower!',
+    galleryTitle:'Inspiration Gallery · 12 Shapes',
+    galleryHowToTitle:'How to Play',
+    galleryHowToHint:'Browse official recipes and creative builds (Official McDonald\'s Argentina triceratops = 2 nuggets + 14 fries). Select blocks to fine-tune: <kbd>Q</kbd><kbd>E</kbd> rotate · <kbd>W</kbd><kbd>S</kbd><kbd>A</kbd><kbd>D</kbd> tilt · <kbd>+</kbd><kbd>-</kbd> length · <kbd>Del</kbd> delete.<br>Want real stacking? Switch to Sandbox or Challenge mode for full gravity.',
+    spawnTitle:'Pick Blocks · Tap Tray to Place',
+    blueprintTitle:'Blueprint Mode · Build by Overlay',
+    statsTitle:'Physics Stats',
+    controlsTitle:'Controls',
+    controlsHint:'Move to preview a <b>ghost block</b>, tap/click to place (with gravity!).<br>Mobile: use ↺↻⤴⤵ at bottom-right; Desktop: <kbd>Q</kbd><kbd>E</kbd> rotate · <kbd>W</kbd><kbd>S</kbd> tilt.<br>Tip: one fry alone falls over, but a <b>3-fry tent</b> stays stable; keep heavy pieces at the base.',
+    towerDiffTitle:'Difficulty',
+    towerRuleTitle:'Rules',
+    towerRuleHint:'Build a tower with fries only, then <b>reach the goal and hold for 5 seconds</b> to win.<br>Easy: 20 fries, no wind · Pro: 16 fries, light wind · Wild Wind: 14 fries, strong gusts 💨<br>Use fewer fries for better records. Best scores are saved locally.',
+    spawnButtons:{fryS:'Short Fry',fryM:'Medium Fry',fryL:'Long Fry',nugget:'Nugget',patty:'Patty'},
+    commonButtons:{undo:'↩︎ Undo',showBlueprint:'👁️ Show Blueprint',hideBlueprint:'🙈 Hide Blueprint',shareModel:'📣 Share Build',clear:'🧹 Clear',start:'▶️ Start Challenge',shareScore:'📣 Share Score',reset:'🔄 Restart',shot:'📸 Screenshot',camera:'🎥 Reset Camera',muteOn:'🔇 Mute',muteOff:'🔊 Sound'},
+    presets:{triceratops:'Official Triceratops',maidadlong:'Viral Fry Dragon',turtle:'Fry Turtle',crab:'McCrab',arches:'Golden Arches M',heart:'Fry Heart',rocket:'Fry Rocket',octopus:'Fry Octopus',cactus:'Cactus Pot',cake:'Birthday Cake',snowman:'Nugget Snowman',crown:'McCrown'},
+    levels:['Easy','Pro','Wild Wind'],
+    statsEmpty:'Tray is empty. Pick a block to start building.',
+    toasts:{blueprintReady:'Blueprint ready: build with the blue overlay.',chooseTower:'Pick a difficulty, then tap "Start Challenge".',viewReset:'Camera reset.',copied:'Copied! Share your record now.',screenshotSaved:'Screenshot saved.'},
+    share:{tower:(fries,h,l)=>`In FriesCraft Challenge, I stacked ${fries} fries to ${h}m on ${l}! Can you beat me? 🍟🗼`,sandbox:(fries,h)=>`I built a ${h}m fries structure in FriesCraft with ${fries} fries and it did not collapse! 🍟`},
+    units:{fries:'fries',pieces:'pcs'},
+    statLabels:{fries:'🍟 Fries',height:'📏 Height',stability:'⚖️ Stability'}
+  }
+};
+
+let lang = 'zh';
+try{
+  const savedLang = localStorage.getItem('friescraft_lang');
+  if(savedLang === 'zh' || savedLang === 'en') lang = savedLang;
+  else lang = ((navigator.language || '').toLowerCase().startsWith('zh')) ? 'zh' : 'en';
+}catch(e){}
+const t = ()=>I18N[lang];
 
 /* ================= 基础场景 ================= */
 const container = document.getElementById('scene');
@@ -560,14 +639,14 @@ function toggleBlueprint(){
   const btn = document.getElementById('btnBlueprint');
   if(blueprints.length){
     clearBlueprint();
-    btn.textContent = '👁️ 显示蓝图';
+    btn.textContent = t().commonButtons.showBlueprint;
     return;
   }
   blueprintMode = true;
   presets[document.getElementById('bpSelect').value]();
   blueprintMode = false;
-  btn.textContent = '🙈 隐藏蓝图';
-  toast('蓝图已就位：照着蓝色虚影拼');
+  btn.textContent = t().commonButtons.hideBlueprint;
+  toast(t().toasts.blueprintReady);
 }
 const V = (x,y,z)=>new THREE.Vector3(x,y,z);
 
@@ -783,28 +862,32 @@ function confetti(){
 
 /* ================= 高塔挑战 ================= */
 const LEVELS = [
-  { name:'新手', goal:0.55, budget:20, wind:false, friction:0.6 },
-  { name:'老手', goal:0.80, budget:16, wind:true,  windMax:0.05, friction:0.5 },
-  { name:'妖风', goal:1.05, budget:14, wind:true,  windMax:0.14, friction:0.42 },
+  { key:'easy', goal:0.55, budget:20, wind:false, friction:0.6 },
+  { key:'pro', goal:0.80, budget:16, wind:true,  windMax:0.05, friction:0.5 },
+  { key:'wild', goal:1.05, budget:14, wind:true,  windMax:0.14, friction:0.42 },
 ];
 let level = 0, towerRunning = false;
 let stableTime = 0, windTimer = 0, windActive = 0;
 let best = {};
 try { best = JSON.parse(localStorage.getItem('friescraft_best')||'{}'); } catch(e){}
 
+function levelName(i){ return t().levels[i] || ''; }
+
 function refreshBestLabel(){
   const el = document.getElementById('hudBest');
   const b = best['L'+level];
-  el.textContent = b ? `${b.fries} 根 · ${b.height}m` : '—';
+  el.textContent = b ? (lang==='zh' ? `${b.fries} 根 · ${b.height}m` : `${b.fries} fries · ${b.height}m`) : '—';
 }
 function startTower(){
   clearAll();
   towerRunning = true; stableTime = 0; windTimer = 3; windActive = 0;
   friction = LEVELS[level].friction; rebuildContact();
   document.getElementById('hud').style.display = 'block';
-  document.getElementById('hudGoal').textContent = LEVELS[level].goal.toFixed(2)+' m · '+LEVELS[level].name;
+  document.getElementById('hudGoal').textContent = LEVELS[level].goal.toFixed(2)+' m · '+levelName(level);
   refreshBestLabel();
-  toast(`挑战开始：${LEVELS[level].budget} 根薯条，搭到 ${LEVELS[level].goal}m 并稳住 5 秒！`);
+  toast(lang==='zh'
+    ? `挑战开始：${LEVELS[level].budget} 根薯条，搭到 ${LEVELS[level].goal}m 并稳住 5 秒！`
+    : `Challenge started: use ${LEVELS[level].budget} fries, reach ${LEVELS[level].goal}m, and hold for 5s!`);
   collapsePanelIfMobile();
 }
 function endTower(){
@@ -816,9 +899,13 @@ function endTower(){
   if(!best[key] || used < best[key].fries){
     best[key] = { fries:used, height:+h.toFixed(2) };
     try{ localStorage.setItem('friescraft_best', JSON.stringify(best)); }catch(e){}
-    toast(`🏆 新纪录！${used} 根薯条搭到 ${h.toFixed(2)}m！`);
+    toast(lang==='zh'
+      ? `🏆 新纪录！${used} 根薯条搭到 ${h.toFixed(2)}m！`
+      : `🏆 New record! ${used} fries stacked to ${h.toFixed(2)}m!`);
   } else {
-    toast(`🎉 挑战成功！${used} 根薯条 · ${h.toFixed(2)}m。本难度纪录 ${best[key].fries} 根`);
+    toast(lang==='zh'
+      ? `🎉 挑战成功！${used} 根薯条 · ${h.toFixed(2)}m。本难度纪录 ${best[key].fries} 根`
+      : `🎉 Challenge cleared! ${used} fries · ${h.toFixed(2)}m. Best on this level: ${best[key].fries} fries.`);
   }
   refreshBestLabel();
   setTimeout(()=>{ document.getElementById('hud').style.display = 'none'; }, 2500);
@@ -913,7 +1000,9 @@ function placeFromGhost(){
   if(mode==='tower' && towerRunning){
     const used = blocks.filter(b=>b.kind.startsWith('fry')).length;
     if(ghostKind.startsWith('fry') && used >= LEVELS[level].budget){
-      toast(`薯条用完啦（${LEVELS[level].budget} 根上限），点"重来"再战`);
+      toast(lang==='zh'
+        ? `薯条用完啦（${LEVELS[level].budget} 根上限），点"重来"再战`
+        : `No fries left (${LEVELS[level].budget} max). Tap "Restart" to try again.`);
       beep(180,.12,'sawtooth',.1);
       return;
     }
@@ -990,6 +1079,78 @@ document.querySelectorAll('#touchPad button').forEach(b=>{
 const modeUIs = { gallery:'ui-gallery', sandbox:'ui-sandbox', tower:'ui-tower' };
 const isMobile = matchMedia('(max-width:768px)').matches || 'ontouchstart' in window;
 
+function applyLanguage(){
+  const tr = t();
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  document.title = tr.pageTitle;
+  document.querySelector('header h1').innerHTML = tr.brandTitle;
+  document.querySelector('header .sub').textContent = tr.subtitle;
+  document.querySelectorAll('#modeTabs button').forEach((b,i)=>b.innerHTML = tr.tabs[i]);
+  document.querySelectorAll('#hud .k').forEach((el,i)=>el.textContent = tr.hudLabels[i]);
+  document.getElementById('windTag').textContent = tr.windTag;
+
+  const secTitles = document.querySelectorAll('#panel .sec-title');
+  if(secTitles[0]) secTitles[0].textContent = tr.galleryTitle;
+  if(secTitles[1]) secTitles[1].textContent = tr.galleryHowToTitle;
+  if(secTitles[2]) secTitles[2].textContent = tr.spawnTitle;
+  if(secTitles[3]) secTitles[3].textContent = tr.blueprintTitle;
+  if(secTitles[4]) secTitles[4].textContent = tr.statsTitle;
+  if(secTitles[5]) secTitles[5].textContent = tr.controlsTitle;
+  if(secTitles[6]) secTitles[6].textContent = tr.towerDiffTitle;
+  if(secTitles[7]) secTitles[7].textContent = tr.towerRuleTitle;
+
+  const hints = document.querySelectorAll('#panel .hint');
+  if(hints[0]) hints[0].innerHTML = tr.galleryHowToHint;
+  if(hints[1]) hints[1].innerHTML = tr.controlsHint;
+  if(hints[2]) hints[2].innerHTML = tr.towerRuleHint;
+
+  document.querySelectorAll('[data-spawn]').forEach(b=>{ b.textContent = tr.spawnButtons[b.dataset.spawn]; });
+  document.getElementById('btnUndo').textContent = tr.commonButtons.undo;
+  document.getElementById('btnBlueprint').textContent = blueprints.length ? tr.commonButtons.hideBlueprint : tr.commonButtons.showBlueprint;
+  document.getElementById('btnShareSand').textContent = tr.commonButtons.shareModel;
+  document.getElementById('btnClearSand').textContent = tr.commonButtons.clear;
+  document.getElementById('btnStartTower').textContent = tr.commonButtons.start;
+  document.getElementById('btnShareTower').textContent = tr.commonButtons.shareScore;
+  document.getElementById('btnResetTower').textContent = tr.commonButtons.reset;
+  document.getElementById('btnShot').textContent = tr.commonButtons.shot;
+  document.getElementById('btnCam').textContent = tr.commonButtons.camera;
+  document.getElementById('btnMute').textContent = muted ? tr.commonButtons.muteOn : tr.commonButtons.muteOff;
+  document.getElementById('stats').textContent = tr.statsEmpty;
+
+  document.querySelectorAll('[data-preset]').forEach(btn=>{
+    const txt = tr.presets[btn.dataset.preset];
+    const tNode = btn.querySelector('.t');
+    if(tNode) tNode.textContent = txt;
+  });
+  document.querySelectorAll('#bpSelect option').forEach(opt=>{
+    const txt = tr.presets[opt.value];
+    if(txt){
+      const emoji = opt.textContent.trim().split(' ')[0];
+      opt.textContent = `${emoji} ${txt}`;
+    }
+  });
+  document.querySelectorAll('[data-level]').forEach((b,i)=>{
+    const small = LEVELS[i].goal.toFixed(2)+'m';
+    b.innerHTML = `${tr.levels[i]}<small style="display:block;font-size:10px;color:var(--ink-3);font-weight:600">${small}</small>`;
+  });
+  document.getElementById('btnLangZh').classList.toggle('active', lang==='zh');
+  document.getElementById('btnLangEn').classList.toggle('active', lang==='en');
+  if(mode==='tower') document.getElementById('hudGoal').textContent = LEVELS[level].goal.toFixed(2)+' m · '+levelName(level);
+  refreshBestLabel();
+  updateStats();
+}
+
+document.getElementById('btnLangZh').onclick = ()=>{
+  lang = 'zh';
+  try{ localStorage.setItem('friescraft_lang', lang); }catch(e){}
+  applyLanguage();
+};
+document.getElementById('btnLangEn').onclick = ()=>{
+  lang = 'en';
+  try{ localStorage.setItem('friescraft_lang', lang); }catch(e){}
+  applyLanguage();
+};
+
 function enterMode(m){
   mode = m;
   document.querySelectorAll('#modeTabs button').forEach(b=>b.classList.toggle('active', b.dataset.mode===m));
@@ -1001,17 +1162,19 @@ function enterMode(m){
   clearBlueprint();
   milestones = [0.3, 0.6, 0.9, 1.2];
   const bpBtn = document.getElementById('btnBlueprint');
-  if(bpBtn) bpBtn.textContent = '👁️ 显示蓝图';
+  if(bpBtn) bpBtn.textContent = t().commonButtons.showBlueprint;
   friction = 0.55; rebuildContact();
   ensureGhost();
   if(m==='gallery'){ presets.triceratops(); }
-  if(m==='tower'){ refreshBestLabel(); toast('选好难度，点「开始挑战」'); }
+  if(m==='tower'){ refreshBestLabel(); toast(t().toasts.chooseTower); }
   updateStats();
 }
 document.querySelectorAll('#modeTabs button').forEach(b=>b.onclick=()=>enterMode(b.dataset.mode));
 document.querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>{
   clearAll(); presets[b.dataset.preset]();
-  toast(b.querySelector('.t').textContent.trim()+' 已上桌');
+  toast(lang==='zh'
+    ? `${b.querySelector('.t').textContent.trim()} 已上桌`
+    : `${b.querySelector('.t').textContent.trim()} is served.`);
   collapsePanelIfMobile();
 });
 document.querySelectorAll('[data-spawn]').forEach(b=>b.onclick=()=>{
@@ -1037,10 +1200,10 @@ document.getElementById('btnBlueprint').onclick = toggleBlueprint;
 document.getElementById('bpSelect').onchange = ()=>{
   if(blueprints.length){ clearBlueprint(); toggleBlueprint(); }
 };
-document.getElementById('btnCam').onclick = ()=>{ controls.reset(); toast('视角已复位'); };
+document.getElementById('btnCam').onclick = ()=>{ controls.reset(); toast(t().toasts.viewReset); };
 document.getElementById('btnMute').onclick = function(){
   muted = !muted;
-  this.textContent = muted ? '🔇 静音' : '🔊 音效';
+  this.textContent = muted ? t().commonButtons.muteOn : t().commonButtons.muteOff;
   if(!muted) sndSelect();
 };
 
@@ -1056,26 +1219,28 @@ function updateStats(){
   const fries = blocks.filter(b=>b.kind.startsWith('fry')).length;
   const others = blocks.length - fries;
   const stab = Math.round((1-Math.min(avgMotion()/0.6,1))*100);
+  const tr = t();
   el.innerHTML = blocks.length ? `
-    <div class="stat-row"><span class="k">🍟 薯条</span><span class="v">${fries} 根${others?` + ${others} 件`:''}</span></div>
-    <div class="stat-row"><span class="k">📏 塔高</span><span class="v big">${towerHeight().toFixed(2)} m</span></div>
-    <div class="stat-row"><span class="k">⚖️ 稳定度</span><span class="v ${stab>85?'':'red'}">${stab}%</span></div>`
-    : '餐盘空空如也，选块积木开始';
+    <div class="stat-row"><span class="k">${tr.statLabels.fries}</span><span class="v">${fries} ${tr.units.fries}${others?` + ${others} ${tr.units.pieces}`:''}</span></div>
+    <div class="stat-row"><span class="k">${tr.statLabels.height}</span><span class="v big">${towerHeight().toFixed(2)} m</span></div>
+    <div class="stat-row"><span class="k">${tr.statLabels.stability}</span><span class="v ${stab>85?'':'red'}">${stab}%</span></div>`
+    : tr.statsEmpty;
 }
 function shareText(){
   const fries = blocks.filter(b=>b.kind.startsWith('fry')).length;
+  const h = towerHeight().toFixed(2);
   return mode==='tower'
-    ? `我在「薯条建筑师 FriesCraft」高塔挑战用 ${fries} 根薯条搭到了 ${towerHeight().toFixed(2)}m（${LEVELS[level].name}难度）！你能超过我吗？🍟🗼`
-    : `我在「薯条建筑师 FriesCraft」用 ${fries} 根薯条搭了个 ${towerHeight().toFixed(2)}m 高的作品，物理引擎认证没塌！🍟`;
+    ? t().share.tower(fries, h, levelName(level))
+    : t().share.sandbox(fries, h);
 }
-document.getElementById('btnShareSand').onclick = ()=>navigator.clipboard.writeText(shareText()).then(()=>toast('战绩已复制，去晒吧'));
-document.getElementById('btnShareTower').onclick = ()=>navigator.clipboard.writeText(shareText()).then(()=>toast('战绩已复制，去晒吧'));
+document.getElementById('btnShareSand').onclick = ()=>navigator.clipboard.writeText(shareText()).then(()=>toast(t().toasts.copied));
+document.getElementById('btnShareTower').onclick = ()=>navigator.clipboard.writeText(shareText()).then(()=>toast(t().toasts.copied));
 document.getElementById('btnShot').onclick = ()=>{
   renderer.render(scene, camera);
   const a = document.createElement('a');
   a.href = renderer.domElement.toDataURL('image/png');
-  a.download = '薯条建筑师作品.png'; a.click();
-  toast('截图已保存');
+  a.download = lang==='zh' ? '薯条建筑师作品.png' : 'friescraft-build.png'; a.click();
+  toast(t().toasts.screenshotSaved);
 };
 
 /* ================= 主循环 ================= */
@@ -1132,7 +1297,9 @@ function loop(){
       const h = towerHeight();
       if(milestones.length && h >= milestones[0]){
         const reached = milestones.shift();
-        toast(`🎉 突破 ${reached.toFixed(1)}m！重心越低越稳`);
+        toast(lang==='zh'
+          ? `🎉 突破 ${reached.toFixed(1)}m！重心越低越稳`
+          : `🎉 Passed ${reached.toFixed(1)}m! Lower center of mass is more stable.`);
         sndMile();
       }
       if(++statTick % 30 === 0) updateStats();
@@ -1156,6 +1323,7 @@ function toast(msg){
 }
 
 /* 初始 */
+applyLanguage();
 enterMode('gallery');
 loop();
 </script>
