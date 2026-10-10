@@ -4,7 +4,7 @@ Dies ist die deutschsprachige Start-README für FriesCraft.
 
 Die vollständige und standardmäßige Dokumentation ist derzeit auf Chinesisch:
 
-- 中文（Standard）: [`README.md`](./README.md)
+- 中文（Standard）: [`README.md`](../README.md)
 
 Weitere Sprachseiten:
 

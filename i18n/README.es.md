@@ -1,12 +1,12 @@
 # FriesCraft 🍟🗼
 
-هذه صفحة README العربية الافتتاحية لمشروع FriesCraft.
+Este es el README de entrada en español de FriesCraft.
 
-حاليًا، الوثيقة الكاملة والافتراضية متوفرة باللغة الصينية:
+Por ahora, la documentación completa y predeterminada se mantiene en chino:
 
-- 中文（الافتراضي）：[`README.md`](./README.md)
+- 中文（predeterminado）：[`README.md`](../README.md)
 
-صفحات اللغات الأخرى:
+Otras páginas de idioma:
 
 - English：[`README.en.md`](./README.en.md)
 - 日本語：[`README.ja.md`](./README.ja.md)

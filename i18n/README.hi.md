@@ -1,12 +1,12 @@
 # FriesCraft 🍟🗼
 
-Ceci est la page README d'accueil en français pour FriesCraft.
+यह FriesCraft का हिंदी लैंडिंग README है।
 
-Pour le moment, la documentation complète et par défaut est maintenue en chinois :
+फिलहाल, पूरा और डिफ़ॉल्ट दस्तावेज़ चीनी भाषा में रखा गया है:
 
-- 中文（par défaut）: [`README.md`](./README.md)
+- 中文（डिफ़ॉल्ट）：[`README.md`](../README.md)
 
-Autres langues :
+अन्य भाषा पेज:
 
 - English：[`README.en.md`](./README.en.md)
 - 日本語：[`README.ja.md`](./README.ja.md)
