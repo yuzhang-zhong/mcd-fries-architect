@@ -2,6 +2,10 @@
 
 Dies ist die deutschsprachige Start-README für FriesCraft.
 
+## Was ist das?
+
+FriesCraft ist ein 3D-Bauspiel, inspiriert vom viralen „Pommes-Drache“-Trend, mit echter Physik (cannon-es): Pommes werden zu Armen, Beinen und Schwanz, Nuggets zum Körper – für kreative Figuren und Turm-Challenges.
+
 Die vollständige und standardmäßige Dokumentation ist derzeit auf Chinesisch:
 
 - 中文（Standard）: [`README.md`](../README.md)
