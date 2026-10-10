@@ -2,6 +2,10 @@
 
 Este é o README de entrada em português do FriesCraft.
 
+## O que é isso?
+
+FriesCraft é um jogo 3D inspirado na tendência viral do “dragão de batatas”, com física real (cannon-es): as batatas viram patas e cauda, e os nuggets viram corpo para montar formas criativas e torres.
+
 No momento, a documentação completa e padrão é mantida em chinês:
 
 - 中文（padrão）：[`README.md`](../README.md)

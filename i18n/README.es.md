@@ -2,6 +2,10 @@
 
 Este es el README de entrada en español de FriesCraft.
 
+## ¿Qué es esto?
+
+FriesCraft es un juego 3D inspirado en la tendencia viral del “dragón de papas”, con física real (cannon-es): las papas forman patas y cola, y los nuggets forman el cuerpo para crear figuras y torres.
+
 Por ahora, la documentación completa y predeterminada se mantiene en chino:
 
 - 中文（predeterminado）：[`README.md`](../README.md)

@@ -2,6 +2,10 @@
 
 Ceci est la page README d'accueil en français pour FriesCraft.
 
+## C'est quoi ?
+
+FriesCraft est un jeu 3D inspiré de la tendance virale « dragon de frites », avec une vraie physique (cannon-es) : les frites servent de pattes et de queue, les nuggets de corps, pour créer des formes et relever des défis de tour.
+
 Pour le moment, la documentation complète et par défaut est maintenue en chinois :
 
 - 中文（par défaut）: [`README.md`](../README.md)

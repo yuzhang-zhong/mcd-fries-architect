@@ -2,6 +2,10 @@
 
 This is the English landing README for FriesCraft.
 
+## What is this
+
+FriesCraft is a 3D building game inspired by the viral “fry dragon” trend, using real physics (cannon-es): fries become limbs and tails, and nuggets become body parts for creative builds and tower challenges.
+
 For now, the full and default documentation is maintained in Chinese:
 
 - 中文（默认）：[`README.md`](../README.md)
