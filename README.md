@@ -2,11 +2,11 @@
 
 > 真·物理重力的麦当劳薯条 3D 搭建游戏 —— 薯条会倒、会滑、会塌。电脑手机都能玩。
 
-📹 **演示视频**（真重力、会塌的那种）：
+📹 **演示视频**（真重力、会塌的那种）—— 点下方海报直接播放：
 
-![FriesCraft 演示](assets/fry-builder-demo.mp4)
+[![FriesCraft 首帧预览](assets/fry-builder-poster.jpg)](./assets/fry-builder-demo.mp4)
 
-> 播放器没加载出来？[点这里直接观看](./assets/fry-builder-demo.mp4)
+> 🖼️ 想先速览？[关键帧图集 PDF（6 帧）在这里](./assets/fry-builder-keyframes.pdf) · 视频直链：[fry-builder-demo.mp4](./assets/fry-builder-demo.mp4)
 
 ## 这是什么
 
@@ -65,7 +65,9 @@ python -m http.server 8080 # 或起本地服务，手机扫码/同网段访问
 mcd-fries-architect/
 ├── index.html              # 游戏本体（three.js + cannon-es 单文件应用）
 ├── assets/
-│   └── fry-builder-demo.mp4 # 演示视频
+│   ├── fry-builder-demo.mp4      # 演示视频（44.5s）
+│   ├── fry-builder-poster.jpg    # 视频首帧海报（README 预览用）
+│   └── fry-builder-keyframes.pdf # 关键帧图集（6 帧）
 ├── skill/
 │   └── SKILL.md            # WorkBuddy Skill：搭建陪玩 + MCP 联动指南
 ├── README.md               # 本文件
