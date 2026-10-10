@@ -12,6 +12,31 @@
 
 > 视频直链：[fry-builder-demo.mp4](./assets/fry-builder-demo.mp4)
 
+## 🌐 多语言 / Languages
+
+- 应用内已支持 **中文 / English** 切换（左上角面板右上方 `中文` / `EN` 按钮）。
+- README 当前主文为中文，下方附英文速览，内容与应用玩法保持同步。
+
+## English Overview
+
+**FriesCraft** is a 3D fry-building game with real rigid-body physics (three.js + cannon-es): pieces can tip, slide, and collapse under gravity.
+
+### Core Modes
+- **Gallery**: browse 12 preset builds (official triceratops, viral fry dragon, turtle, crab, rocket, heart, etc.).
+- **Sandbox**: free placement with ghost preview, blueprint overlay, stability feedback, and share/screenshot tools.
+- **Challenge**: fry-only tower mode with 3 levels (Easy / Pro / Wild Wind), height goals, and a 5-second stability win condition.
+
+### Controls
+- Desktop: drag to orbit, wheel to zoom, click to place, `Q/E/W/S` rotate & tilt.
+- Mobile: touch drag/orbit + floating direction pad (`↺ ↻ ⤴ ⤵`).
+
+### Quick Start
+```bash
+start index.html           # Windows
+open index.html            # macOS
+python -m http.server 8080 # local server for phone testing
+```
+
 ## 这是什么
 
 2026 年全网爆火的"麦当龙"玩法：把麦乐鸡当身体、薯条当四肢和尾巴，拼出各种造型。**薯条建筑师**把它做成了带真实物理引擎（cannon-es）的 3D 搭建游戏：
