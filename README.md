@@ -1,3 +1,5 @@
+| [EN](./i18n/README.en.md) | [中文](./README.md) | [ES](./i18n/README.es.md) | [JA](./i18n/README.ja.md) | [KO](./i18n/README.ko.md) | [FR](./i18n/README.fr.md) | [DE](./i18n/README.de.md) | [PT](./i18n/README.pt.md) | [RU](./i18n/README.ru.md) | [AR](./i18n/README.ar.md) | [HI](./i18n/README.hi.md) |
+
 # 薯条建筑师 FriesCraft 🍟🗼
 
 > 真·物理重力的麦当劳薯条 3D 搭建游戏 —— 薯条会倒、会滑、会塌。电脑手机都能玩。
