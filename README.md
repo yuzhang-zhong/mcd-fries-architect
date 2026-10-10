@@ -88,7 +88,7 @@ python -m http.server 8080 # 或起本地服务，手机扫码/同网段访问
 
 ## 与麦当劳 MCP 的联动（可选）
 
-画板本身零依赖可玩。配套 Skill（`skill/SKILL.md`）面向接了[麦当劳 MCP](https://github.com/M-China/mcd-mcp-server) 的 AI 客户端（如 WorkBuddy），提供：营养热量查询（`list-nutrition-foods`，游戏内热量已用其校准）、活动日历安利（`campaign-calendar`）、以及"玩完去线下门店拼真薯条"的到店查询（`query-nearby-stores`）。详见 [MCP_INTEGRATION.md](./MCP_INTEGRATION.md)。
+画板无需安装依赖或构建，但加载游戏时需要访问 jsDelivr CDN 获取 three.js 和 cannon-es。配套 Skill（`skill/SKILL.md`）面向接了[麦当劳 MCP](https://github.com/M-China/mcd-mcp-server) 的 AI 客户端（如 WorkBuddy），提供：营养热量查询（`list-nutrition-foods`，游戏内热量已用其校准）、活动日历安利（`campaign-calendar`）、以及"玩完去线下门店拼真薯条"的到店查询（`query-nearby-stores`）。详见 [MCP_INTEGRATION.md](./MCP_INTEGRATION.md)。
 
 ## 项目结构
 
