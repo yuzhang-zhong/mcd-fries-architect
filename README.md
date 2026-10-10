@@ -2,11 +2,15 @@
 
 > 真·物理重力的麦当劳薯条 3D 搭建游戏 —— 薯条会倒、会滑、会塌。电脑手机都能玩。
 
-📹 **演示视频**（真重力、会塌的那种）—— 点下方海报直接播放：
+📹 **演示视频**（真重力、会塌的那种）—— 点海报直接播放：
 
-[![FriesCraft 首帧预览](assets/fry-builder-poster.jpg)](./assets/fry-builder-demo.mp4)
+<a href="./assets/fry-builder-demo.mp4"><img src="assets/fry-builder-poster.jpg" width="300" alt="FriesCraft 演示视频首帧"></a>
 
-> 🖼️ 想先速览？[关键帧图集 PDF（6 帧）在这里](./assets/fry-builder-keyframes.pdf) · 视频直链：[fry-builder-demo.mp4](./assets/fry-builder-demo.mp4)
+🖼️ **关键帧速览**（完整收藏版：[PDF 图集](./assets/fry-builder-keyframes.pdf)）：
+
+<img src="assets/fry-builder-keyframes.jpg" width="720" alt="FriesCraft 关键帧图集">
+
+> 视频直链：[fry-builder-demo.mp4](./assets/fry-builder-demo.mp4)
 
 ## 这是什么
 
@@ -67,7 +71,8 @@ mcd-fries-architect/
 ├── assets/
 │   ├── fry-builder-demo.mp4      # 演示视频（44.5s）
 │   ├── fry-builder-poster.jpg    # 视频首帧海报（README 预览用）
-│   └── fry-builder-keyframes.pdf # 关键帧图集（6 帧）
+│   ├── fry-builder-keyframes.jpg # 关键帧横幅图集（README 内嵌）
+│   └── fry-builder-keyframes.pdf # 关键帧图集收藏版（6 帧）
 ├── skill/
 │   └── SKILL.md            # WorkBuddy Skill：搭建陪玩 + MCP 联动指南
 ├── README.md               # 本文件
