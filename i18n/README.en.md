@@ -6,7 +6,7 @@ A 3D building game where fries and nuggets become structures that can tip, slide
 
 [简体中文 / full documentation](../README.md) · [Watch the demo](../assets/fry-builder-demo.mp4) · [Optional MCP integration](../MCP_INTEGRATION.md)
 
-[![Poster from the existing FriesCraft showcase video](../assets/fry-builder-poster.jpg)](../assets/fry-builder-demo.mp4)
+<p align="center"><a href="../assets/fry-builder-demo.mp4"><img src="../assets/fry-builder-poster.jpg" width="280" alt="Poster from the existing FriesCraft showcase video"></a></p>
 
 The showcase mixes creative food imagery with a game segment. Its poster is not a screenshot of the game interface.
 
