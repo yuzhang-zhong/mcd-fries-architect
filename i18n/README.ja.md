@@ -1,4 +1,12 @@
+<div align="center">
+
 # FriesCraft 🍟🗼
+
+**ポテトとナゲットを積んで、重力と遊ぼう。**
+
+[简体中文](../README.md) · [English](README.en.md) · [デモ](../assets/fry-builder-demo.mp4) · [ローカルで遊ぶ](#local)
+
+</div>
 
 これは FriesCraft の日本語ランディング README です。
 
@@ -10,15 +18,22 @@ FriesCraft は、2026年に話題になった「ポテトドラゴン」遊び�
 
 - 中文（デフォルト）：[`README.md`](../README.md)
 
-他の言語ページ：
+<a id="local"></a>
+## ローカルで遊ぶ
 
-- English：[`README.en.md`](./README.en.md)
-- 日本語：[`README.ja.md`](./README.ja.md)
-- 한국어：[`README.ko.md`](./README.ko.md)
-- Français：[`README.fr.md`](./README.fr.md)
-- Deutsch：[`README.de.md`](./README.de.md)
-- Español：[`README.es.md`](./README.es.md)
-- Português：[`README.pt.md`](./README.pt.md)
-- Русский：[`README.ru.md`](./README.ru.md)
-- العربية：[`README.ar.md`](./README.ar.md)
-- हिन्दी：[`README.hi.md`](./README.hi.md)
+npm のインストールやビルドは不要です。
+
+```bash
+git clone https://github.com/yuzhang-zhong/mcd-fries-architect.git
+cd mcd-fries-architect
+python -m http.server 8080
+```
+
+WebGL 対応のブラウザで **http://localhost:8080** を開きます。3D ライブラリを
+CDN から読み込むため、インターネット接続が必要です。ゲーム内の対応言語は
+中国語と英語です。このページはドキュメントの入口であり、日本語版の
+ゲーム画面が提供されるわけではありません。
+
+## 他の言語
+
+[English](README.en.md) · **日本語** · [한국어](README.ko.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Español](README.es.md) · [Português](README.pt.md) · [Русский](README.ru.md) · [العربية](README.ar.md) · [हिन्दी](README.hi.md)

@@ -1,4 +1,12 @@
+<div align="center">
+
 # FriesCraft 🍟🗼
+
+**ابنِ بالبطاطس والناجتس، ثم اختبر توازن البرج.**
+
+[简体中文](../README.md) · [English](README.en.md) · [العرض](../assets/fry-builder-demo.mp4) · [التشغيل محليًا](#local)
+
+</div>
 
 هذه صفحة README العربية الافتتاحية لمشروع FriesCraft.
 
@@ -10,15 +18,21 @@ FriesCraft هي لعبة بناء ثلاثية الأبعاد مستوحاة م�
 
 - 中文（الافتراضي）：[`README.md`](../README.md)
 
-صفحات اللغات الأخرى:
+<a id="local"></a>
+## التشغيل محليًا
 
-- English：[`README.en.md`](./README.en.md)
-- 日本語：[`README.ja.md`](./README.ja.md)
-- 한국어：[`README.ko.md`](./README.ko.md)
-- Français：[`README.fr.md`](./README.fr.md)
-- Deutsch：[`README.de.md`](./README.de.md)
-- Español：[`README.es.md`](./README.es.md)
-- Português：[`README.pt.md`](./README.pt.md)
-- Русский：[`README.ru.md`](./README.ru.md)
-- العربية：[`README.ar.md`](./README.ar.md)
-- हिन्दी：[`README.hi.md`](./README.hi.md)
+لا حاجة إلى تثبيت npm أو تنفيذ خطوة بناء:
+
+```bash
+git clone https://github.com/yuzhang-zhong/mcd-fries-architect.git
+cd mcd-fries-architect
+python -m http.server 8080
+```
+
+افتح **http://localhost:8080** في متصفح حديث يدعم WebGL. تُحمّل مكتبات
+الرسوم ثلاثية الأبعاد عبر CDN، لذا يلزم اتصال بالإنترنت. تدعم واجهة اللعبة
+الصينية والإنجليزية؛ هذه الصفحة مدخل للتوثيق وليست ترجمة إضافية لواجهة اللعبة.
+
+## لغات أخرى
+
+[English](README.en.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Español](README.es.md) · [Português](README.pt.md) · [Русский](README.ru.md) · **العربية** · [हिन्दी](README.hi.md)

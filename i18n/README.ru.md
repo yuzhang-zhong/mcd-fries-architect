@@ -1,4 +1,12 @@
+<div align="center">
+
 # FriesCraft 🍟🗼
+
+**Стройте из картофеля фри и наггетсов и проверяйте равновесие.**
+
+[简体中文](../README.md) · [English](README.en.md) · [Демо](../assets/fry-builder-demo.mp4) · [Запустить локально](#local)
+
+</div>
 
 Это стартовый README на русском языке для FriesCraft.
 
@@ -10,15 +18,22 @@ FriesCraft — это 3D-игра по мотивам вирусного тре�
 
 - 中文（по умолчанию）：[`README.md`](../README.md)
 
-Другие языковые страницы:
+<a id="local"></a>
+## Запустить локально
 
-- English：[`README.en.md`](./README.en.md)
-- 日本語：[`README.ja.md`](./README.ja.md)
-- 한국어：[`README.ko.md`](./README.ko.md)
-- Français：[`README.fr.md`](./README.fr.md)
-- Deutsch：[`README.de.md`](./README.de.md)
-- Español：[`README.es.md`](./README.es.md)
-- Português：[`README.pt.md`](./README.pt.md)
-- Русский：[`README.ru.md`](./README.ru.md)
-- العربية：[`README.ar.md`](./README.ar.md)
-- हिन्दी：[`README.hi.md`](./README.hi.md)
+Установка npm и сборка не нужны:
+
+```bash
+git clone https://github.com/yuzhang-zhong/mcd-fries-architect.git
+cd mcd-fries-architect
+python -m http.server 8080
+```
+
+Откройте **http://localhost:8080** в современном браузере с WebGL.
+3D-библиотеки загружаются через CDN, поэтому нужен Интернет.
+Интерфейс игры доступен на китайском и английском; эта страница —
+вход в документацию, а не дополнительный перевод интерфейса.
+
+## Другие языки
+
+[English](README.en.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Español](README.es.md) · [Português](README.pt.md) · **Русский** · [العربية](README.ar.md) · [हिन्दी](README.hi.md)

@@ -1,4 +1,12 @@
+<div align="center">
+
 # FriesCraft 🍟🗼
+
+**감자튀김과 너겟을 쌓고, 중력 앞에서 버티는지 확인해 보세요.**
+
+[简体中文](../README.md) · [English](README.en.md) · [데모](../assets/fry-builder-demo.mp4) · [로컬에서 실행](#local)
+
+</div>
 
 이 문서는 FriesCraft의 한국어 랜딩 README입니다.
 
@@ -10,15 +18,22 @@ FriesCraft는 2026년에 유행한 “감자튀김 드래곤” 놀이에서 영
 
 - 中文（기본）：[`README.md`](../README.md)
 
-다른 언어 페이지:
+<a id="local"></a>
+## 로컬에서 실행
 
-- English：[`README.en.md`](./README.en.md)
-- 日本語：[`README.ja.md`](./README.ja.md)
-- 한국어：[`README.ko.md`](./README.ko.md)
-- Français：[`README.fr.md`](./README.fr.md)
-- Deutsch：[`README.de.md`](./README.de.md)
-- Español：[`README.es.md`](./README.es.md)
-- Português：[`README.pt.md`](./README.pt.md)
-- Русский：[`README.ru.md`](./README.ru.md)
-- العربية：[`README.ar.md`](./README.ar.md)
-- हिन्दी：[`README.hi.md`](./README.hi.md)
+npm 설치나 빌드 과정이 필요하지 않습니다.
+
+```bash
+git clone https://github.com/yuzhang-zhong/mcd-fries-architect.git
+cd mcd-fries-architect
+python -m http.server 8080
+```
+
+WebGL을 지원하는 최신 브라우저에서 **http://localhost:8080** 을 여세요.
+3D 라이브러리를 CDN에서 불러오므로 인터넷 연결이 필요합니다.
+게임 화면은 중국어와 영어를 지원합니다. 이 문서는 안내 페이지이며,
+게임 화면의 한국어 번역을 뜻하지 않습니다.
+
+## 다른 언어
+
+[English](README.en.md) · [日本語](README.ja.md) · **한국어** · [Français](README.fr.md) · [Deutsch](README.de.md) · [Español](README.es.md) · [Português](README.pt.md) · [Русский](README.ru.md) · [العربية](README.ar.md) · [हिन्दी](README.hi.md)

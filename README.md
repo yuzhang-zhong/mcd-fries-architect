@@ -12,9 +12,16 @@
 <p align="center"><strong>一根薯条会倒。三根，也许能搭出第一座塔。</strong><br>有重力、会滑落、会坍塌的 3D 休闲搭建游戏。</p>
 
 <p align="center">
+  <a href="index.html"><img src="https://img.shields.io/badge/3D-Three.js-222222" alt="Three.js 3D 渲染"></a>
+  <a href="#物理手感从哪里来"><img src="https://img.shields.io/badge/Physics-cannon--es-2563eb" alt="cannon-es 刚体物理"></a>
+  <a href="#开始搭建"><img src="https://img.shields.io/badge/运行-无需构建-0f766e" alt="无需 npm 安装或构建"></a>
+</p>
+
+<p align="center">
   <a href="assets/fry-builder-demo.mp4">看演示</a> ·
   <a href="#开始搭建">本地开玩</a> ·
   <a href="#先玩哪一种">三种玩法</a> ·
+  <a href="#操作速查">操作速查</a> ·
   <a href="MCP_INTEGRATION.md">可选 MCP 联动</a>
 </p>
 
@@ -26,6 +33,7 @@
 
 把薯条当梁柱、鸡块当底座，先摆出一个造型，再看看它能不能站稳。FriesCraft 用 **Three.js + cannon-es** 做成一个无需构建的单文件网页游戏，支持桌面和触屏操作，应用内可切换中文 / English。
 
+> [!NOTE]
 > 独立开发的麦当劳程序员节创意开发大赛参赛作品，**不是麦当劳官方产品，参赛不代表获奖或官方背书**。无需连接 MCP 即可玩游戏；加载 3D 库需要网络。
 
 ## 先玩哪一种

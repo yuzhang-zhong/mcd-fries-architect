@@ -1,10 +1,18 @@
+<div align="center">
+
 # FriesCraft
 
 **One fry falls over. Three might become your first tower.**
 
-A 3D building game where fries and nuggets become structures that can tip, slide, and collapse. Built with Three.js and cannon-es as a single HTML application, with desktop and touch controls.
+[![Three.js](https://img.shields.io/badge/3D-Three.js-222222)](../index.html)
+[![cannon-es](https://img.shields.io/badge/Physics-cannon--es-2563eb)](../index.html)
+[![No build step](https://img.shields.io/badge/Setup-No_build_step-0f766e)](#run-locally)
 
-[简体中文 / full documentation](../README.md) · [Watch the demo](../assets/fry-builder-demo.mp4) · [Optional MCP integration](../MCP_INTEGRATION.md)
+[Run locally](#run-locally) · [Game modes](#pick-a-mode) · [Watch the demo](../assets/fry-builder-demo.mp4) · [Optional MCP](../MCP_INTEGRATION.md) · [简体中文](../README.md)
+
+</div>
+
+A 3D building game where fries and nuggets become structures that can tip, slide, and collapse. Built with Three.js and cannon-es as a single HTML application, with desktop and touch controls.
 
 <p align="center"><a href="../assets/fry-builder-demo.mp4"><img src="../assets/fry-builder-poster.jpg" width="280" alt="Poster from the existing FriesCraft showcase video"></a></p>
 

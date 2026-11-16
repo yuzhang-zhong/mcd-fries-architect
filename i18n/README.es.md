@@ -1,4 +1,12 @@
+<div align="center">
+
 # FriesCraft 🍟🗼
+
+**Construye con papas y nuggets, y pon tu torre a prueba.**
+
+[简体中文](../README.md) · [English](README.en.md) · [Demo](../assets/fry-builder-demo.mp4) · [Jugar en local](#local)
+
+</div>
 
 Este es el README de entrada en español de FriesCraft.
 
@@ -10,15 +18,22 @@ Por ahora, la documentación completa y predeterminada se mantiene en chino:
 
 - 中文（predeterminado）：[`README.md`](../README.md)
 
-Otras páginas de idioma:
+<a id="local"></a>
+## Jugar en local
 
-- English：[`README.en.md`](./README.en.md)
-- 日本語：[`README.ja.md`](./README.ja.md)
-- 한국어：[`README.ko.md`](./README.ko.md)
-- Français：[`README.fr.md`](./README.fr.md)
-- Deutsch：[`README.de.md`](./README.de.md)
-- Español：[`README.es.md`](./README.es.md)
-- Português：[`README.pt.md`](./README.pt.md)
-- Русский：[`README.ru.md`](./README.ru.md)
-- العربية：[`README.ar.md`](./README.ar.md)
-- हिन्दी：[`README.hi.md`](./README.hi.md)
+Sin instalación de npm ni compilación:
+
+```bash
+git clone https://github.com/yuzhang-zhong/mcd-fries-architect.git
+cd mcd-fries-architect
+python -m http.server 8080
+```
+
+Abre **http://localhost:8080** en un navegador moderno con WebGL. Las
+bibliotecas 3D se cargan desde un CDN y necesitan conexión a Internet.
+La interfaz del juego está en chino e inglés; esta página es una entrada
+a la documentación, no una traducción adicional del juego.
+
+## Otros idiomas
+
+[English](README.en.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · **Español** · [Português](README.pt.md) · [Русский](README.ru.md) · [العربية](README.ar.md) · [हिन्दी](README.hi.md)
