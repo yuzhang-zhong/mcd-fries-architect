@@ -1,10 +1,5 @@
 <p align="center">
-  <a href="i18n/README.en.md">English</a> · <strong>简体中文</strong> ·
-  <a href="i18n/README.es.md">ES</a> · <a href="i18n/README.ja.md">JA</a> ·
-  <a href="i18n/README.ko.md">KO</a> · <a href="i18n/README.fr.md">FR</a> ·
-  <a href="i18n/README.de.md">DE</a> · <a href="i18n/README.pt.md">PT</a> ·
-  <a href="i18n/README.ru.md">RU</a> · <a href="i18n/README.ar.md">AR</a> ·
-  <a href="i18n/README.hi.md">HI</a>
+  <strong>简体中文</strong> · <a href="i18n/README.en.md">English</a> · <a href="#languages">More languages</a>
 </p>
 
 <h1 align="center">薯条建筑师 · FriesCraft</h1>
@@ -12,8 +7,6 @@
 <p align="center"><strong>一根薯条会倒。三根，也许能搭出第一座塔。</strong><br>有重力、会滑落、会坍塌的 3D 休闲搭建游戏。</p>
 
 <p align="center">
-  <a href="index.html"><img src="https://img.shields.io/badge/3D-Three.js-222222" alt="Three.js 3D 渲染"></a>
-  <a href="#物理手感从哪里来"><img src="https://img.shields.io/badge/Physics-cannon--es-2563eb" alt="cannon-es 刚体物理"></a>
   <a href="#开始搭建"><img src="https://img.shields.io/badge/运行-无需构建-0f766e" alt="无需 npm 安装或构建"></a>
 </p>
 
@@ -25,13 +18,13 @@
   <a href="MCP_INTEGRATION.md">可选 MCP 联动</a>
 </p>
 
+把薯条当梁柱、鸡块当底座，先摆出一个造型，再看看它能不能站稳。FriesCraft 用 **Three.js + cannon-es** 做成一个无需构建的单文件网页游戏，支持桌面和触屏操作，应用内可切换中文 / English。
+
 <p align="center">
-  <a href="assets/fry-builder-demo.mp4"><img src="assets/fry-builder-poster.jpg" width="280" alt="FriesCraft 已有展示视频的食物造型海报，点击查看视频"></a>
+  <a href="assets/fry-builder-demo.mp4"><img src="assets/fry-builder-keyframes.jpg" width="900" alt="FriesCraft 现有展示视频的六帧图集，包含创意食物视觉与游戏画面"></a>
 </p>
 
-<p align="center"><sub>已有展示视频的封面，包含创意食物视觉，不是游戏界面截图。<a href="assets/fry-builder-demo.mp4">打开 MP4 演示</a></sub></p>
-
-把薯条当梁柱、鸡块当底座，先摆出一个造型，再看看它能不能站稳。FriesCraft 用 **Three.js + cannon-es** 做成一个无需构建的单文件网页游戏，支持桌面和触屏操作，应用内可切换中文 / English。
+<p align="center"><sub>现有展示视频图集，包含创意食物视觉与游戏画面。点击查看 MP4 演示。</sub></p>
 
 > [!NOTE]
 > 独立开发的麦当劳程序员节创意开发大赛参赛作品，**不是麦当劳官方产品，参赛不代表获奖或官方背书**。无需连接 MCP 即可玩游戏；加载 3D 库需要网络。
@@ -46,9 +39,18 @@
 
 **第一次玩：**先试三根薯条撑成“帐篷”，再加上层结构。单根竖着放容易倒，把重心压低通常比一味堆高更有用。图鉴造型不等于已经通过物理稳定性验证，想试重力请进入自由搭建或挑战模式。
 
-![FriesCraft 现有展示视频的六帧图集，包含创意食物视觉与游戏画面](assets/fry-builder-keyframes.jpg)
+<details>
+<summary>视频封面与 PDF 图集</summary>
+
+<p align="center">
+  <a href="assets/fry-builder-demo.mp4"><img src="assets/fry-builder-poster.jpg" width="200" alt="FriesCraft 已有展示视频的食物造型海报，点击查看视频"></a>
+</p>
+
+已有展示视频的封面，包含创意食物视觉，不是游戏界面截图。[打开 MP4 演示](assets/fry-builder-demo.mp4)。
 
 [查看 PDF 图集](assets/fry-builder-keyframes.pdf)
+
+</details>
 
 ### 高塔挑战
 
@@ -118,3 +120,10 @@ mcd-fries-architect/
 项目灵感来自麦当劳阿根廷“Jugá con la comida”三角龙教程，以及“麦当龙”等食物搭建二创。图鉴保留三角龙、麦当龙、乌龟、大闸蟹等造型，并包含项目原创的火箭、章鱼、仙人掌、生日蛋糕、雪人、皇冠、金拱门 M 与爱心预设。
 
 本项目由参赛者独立开发，与品牌官方产品或背书无关。餐品信息、价格及供应状态以官方渠道实时结果为准；项目输出不构成医疗、营养或其他专业建议。[参赛声明原文](CONTEST_DECLARATION.md)保留不变。
+
+<a id="languages"></a>
+## 更多语言 / Languages
+
+These are documentation entry points. The game interface supports Chinese and English.
+
+[English](i18n/README.en.md) · [Español](i18n/README.es.md) · [日本語](i18n/README.ja.md) · [한국어](i18n/README.ko.md) · [Français](i18n/README.fr.md) · [Deutsch](i18n/README.de.md) · [Português](i18n/README.pt.md) · [Русский](i18n/README.ru.md) · [العربية](i18n/README.ar.md) · [हिन्दी](i18n/README.hi.md)

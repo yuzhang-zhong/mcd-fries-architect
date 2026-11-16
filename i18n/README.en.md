@@ -4,19 +4,17 @@
 
 **One fry falls over. Three might become your first tower.**
 
-[![Three.js](https://img.shields.io/badge/3D-Three.js-222222)](../index.html)
-[![cannon-es](https://img.shields.io/badge/Physics-cannon--es-2563eb)](../index.html)
 [![No build step](https://img.shields.io/badge/Setup-No_build_step-0f766e)](#run-locally)
 
 [Run locally](#run-locally) · [Game modes](#pick-a-mode) · [Watch the demo](../assets/fry-builder-demo.mp4) · [Optional MCP](../MCP_INTEGRATION.md) · [简体中文](../README.md)
 
 </div>
 
-A 3D building game where fries and nuggets become structures that can tip, slide, and collapse. Built with Three.js and cannon-es as a single HTML application, with desktop and touch controls.
+A 3D building game where fries and nuggets become structures that can tip, slide, and collapse. Built with Three.js and cannon-es as a [single HTML application](../index.html), with desktop and touch controls.
 
-<p align="center"><a href="../assets/fry-builder-demo.mp4"><img src="../assets/fry-builder-poster.jpg" width="280" alt="Poster from the existing FriesCraft showcase video"></a></p>
+<p align="center"><a href="../assets/fry-builder-demo.mp4"><img src="../assets/fry-builder-keyframes.jpg" width="900" alt="Keyframes from the existing showcase video"></a></p>
 
-The showcase mixes creative food imagery with a game segment. Its poster is not a screenshot of the game interface.
+The existing video mixes creative food imagery with a game segment. Select the image to watch it.
 
 ## Pick a mode
 
@@ -28,7 +26,14 @@ The showcase mixes creative food imagery with a game segment. Its poster is not 
 
 Challenge levels: **Easy** uses 20 fries for 0.55 m with no wind; **Pro** uses 16 for 0.80 m with light wind; **Wild Wind** uses 14 for 1.05 m with stronger gusts. Best scores are stored locally in the browser.
 
-![Keyframes from the existing showcase video](../assets/fry-builder-keyframes.jpg)
+<details>
+<summary>Video poster</summary>
+
+<p align="center"><a href="../assets/fry-builder-demo.mp4"><img src="../assets/fry-builder-poster.jpg" width="200" alt="Poster from the existing FriesCraft showcase video"></a></p>
+
+The poster uses creative food imagery; it is not a screenshot of the game interface.
+
+</details>
 
 ## Run locally
 
