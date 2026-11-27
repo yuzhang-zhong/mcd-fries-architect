@@ -1,0 +1,24 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "mcd-fries-architect",
+  "description": "FriesCraft AI co-play coach Skill for the zero-build 3D rigid-body physics French-fry and nugget tower browser game (Three.js + cannon-es) with optional MCP guide.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Yuzhang Zhong",
+    "url": "https://github.com/yuzhang-zhong"
+  },
+  "homepage": "https://github.com/yuzhang-zhong/mcd-fries-architect",
+  "repository": "https://github.com/yuzhang-zhong/mcd-fries-architect",
+  "license": "MIT",
+  "keywords": [
+    "3d-game",
+    "physics-game",
+    "browser-game",
+    "tower-stacking",
+    "french-fries",
+    "chicken-nuggets",
+    "threejs",
+    "cannon-es",
+    "mcp"
+  ]
+}
