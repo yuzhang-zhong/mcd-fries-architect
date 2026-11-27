@@ -1,5 +1,3 @@
-> **Quick answer:** **FriesCraft** (*薯条建筑师*) is a zero-build, single-HTML-file 3D rigid-body physics Jenga-like browser game (`Three.js + cannon-es`) where you stack McDonald's French fries and chicken nuggets into 12 sculptures (McDragon, Triceratops, Rocket) or beat 3 wind-gust tower challenges, bundled with an installable AI co-play coach Skill (`gh skill install yuzhang-zhong/mcd-fries-architect mcd-fries-architect`).
-
 <div align="center">
 
 # FriesCraft
@@ -10,7 +8,7 @@
 
 [![No build step](https://img.shields.io/badge/Setup-No_build_step-0f766e)](#run-locally)
 
-[Run locally](#run-locally) · [Game modes](#pick-a-mode) · [Watch the demo](../assets/fry-builder-demo.mp4) · [Optional MCP](../MCP_INTEGRATION.md) · [简体中文](../README.md)
+**[Play locally](#run-locally)** · [Watch the demo](../assets/fry-builder-demo.mp4) · [Game modes](#pick-a-mode) · [Optional MCP](../MCP_INTEGRATION.md)
 
 </div>
 
@@ -19,27 +17,6 @@ A 3D building game where fries and nuggets become structures that can tip, slide
 <p align="center"><a href="../assets/fry-builder-demo.mp4"><img src="../assets/fry-builder-keyframes.jpg" width="900" alt="Keyframes from the existing showcase video"></a></p>
 
 The existing video mixes creative food imagery with a game segment. Select the image to watch it.
-
-## Pick a mode
-
-| Mode | What to try |
-| --- | --- |
-| Gallery | Explore and edit 12 preset builds. Gallery poses are not proof of physical stability. |
-| Sandbox | Place pieces with a ghost preview, try the blueprint overlay, and see how gravity changes your design. |
-| Tower challenge | Use fries only, reach the height target, and hold it for five seconds. |
-
-Challenge levels: **Easy** uses 20 fries for 0.55 m with no wind; **Pro** uses 16 for 0.80 m with light wind; **Wild Wind** uses 14 for 1.05 m with stronger gusts. Best scores are stored locally in the browser.
-
-<details>
-<summary>Video poster</summary>
-
-<p align="center"><a href="../assets/fry-builder-demo.mp4"><img src="../assets/fry-builder-poster.jpg" width="200" alt="Poster from the existing FriesCraft showcase video"></a></p>
-
-The poster uses creative food imagery; it is not a screenshot of the game interface.
-
-[Open the PDF contact sheet](../assets/fry-builder-keyframes.pdf).
-
-</details>
 
 ## Run locally
 
@@ -51,18 +28,32 @@ cd mcd-fries-architect
 python -m http.server 8080
 ```
 
-Open **http://localhost:8080** in a modern WebGL-capable browser. The game loads Three.js 0.160.0 and cannon-es 0.20.0 from jsDelivr, so an internet connection is needed. It is not a fully offline build.
+Open **<http://localhost:8080>** in a modern browser with WebGL. Choose **Sandbox**, pick a fry, and move over the tray to see the placement preview. Click to place it. On a touchscreen, drag to preview and tap to place.
 
-- Desktop: drag to orbit, scroll to zoom, click to place, `Q/E` to rotate, and `W/S` to tilt.
-- Touch: drag to orbit, tap to place, and use the floating rotation/tilt controls.
-- The in-game language switch supports **Chinese and English**. Other README languages are navigation pages, not additional game translations.
-- Try a three-fry tent before building upward. The game's gravity, friction, and stability feedback are gameplay approximations, not engineering tools.
+The game loads Three.js 0.160.0 and cannon-es 0.20.0 from jsDelivr, so it needs internet access. If the 3D scene does not load, check WebGL support and CDN availability. A phone on the same local network can use the computer's LAN IP and port if the firewall allows it.
 
-On the same local network, a phone can connect to the computer's LAN IP and port; availability depends on the network and firewall. If no 3D scene appears, check the browser console and whether the CDN is reachable.
+Use `中文` / `EN` in the upper-left panel to switch the game language. The other README translations are navigation pages.
 
-Use the `中文` / `EN` controls in the upper-left panel to switch the game language.
+## Pick a mode
 
-Challenge difficulty also reduces friction. Small placement disturbances mean that a build that looks balanced may still fall. Scores remain in the current browser; results can be copied and screenshots exported for sharing.
+| Mode | What to try |
+| --- | --- |
+| Gallery | Explore and edit 12 preset builds. Gallery poses are not proof of physical stability. |
+| Sandbox | Place pieces with a ghost preview, try the blueprint overlay, and see how gravity changes your design. |
+| Tower challenge | Use fries only, reach the height target, and hold it for five seconds. |
+
+Try a three-fry tent in Sandbox before building upward. Challenge levels: **Easy** uses 20 fries for 0.55 m with no wind; **Pro** uses 16 for 0.80 m with light wind; **Wild Wind** uses 14 for 1.05 m with stronger gusts. Higher difficulty also means less friction. Best scores are stored in the current browser; you can copy a result or export a screenshot.
+
+<details>
+<summary>Video poster</summary>
+
+<p align="center"><a href="../assets/fry-builder-demo.mp4"><img src="../assets/fry-builder-poster.jpg" width="200" alt="Poster from the existing FriesCraft showcase video"></a></p>
+
+The poster uses creative food imagery; it is not a screenshot of the game interface.
+
+[Open the PDF contact sheet](../assets/fry-builder-keyframes.pdf).
+
+</details>
 
 ## Controls
 

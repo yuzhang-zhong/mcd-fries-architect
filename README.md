@@ -4,23 +4,19 @@
 
 <h1 align="center">薯条建筑师 · FriesCraft</h1>
 
-<p align="center"><strong>一根薯条会倒。三根，也许能搭出第一座塔。</strong><br>用 Three.js + cannon-es 做的有真实刚体重力和随机妖风挑战的麦当劳薯条与麦乐鸡 3D 搭塔网页小游戏（附 AI 陪玩 Skill 与 MCP 联动）。<br>Zero-build single-file 3D rigid-body physics browser game (Three.js + cannon-es) where you stack McDonalds French fries and chicken nuggets (McNuggets) into towers and sculptures against gravity and wind gusts, with an AI co-play Agent Skill.</p>
+<p align="center"><strong>一根薯条会倒。三根，也许能搭出第一座塔。</strong><br>把薯条和麦乐鸡搭成塔，看它在重力和阵风下能不能站稳。这是用 Three.js 和 cannon-es 写的 3D 网页小游戏。</p>
 
 <p align="center">
   <a href="#开始搭建"><img src="https://img.shields.io/badge/运行-无需构建-0f766e" alt="无需 npm 安装或构建"></a>
 </p>
 
 <p align="center">
+  <strong><a href="#开始搭建">本地开玩</a></strong> ·
   <a href="assets/fry-builder-demo.mp4">看演示</a> ·
-  <a href="#开始搭建">本地开玩</a> ·
   <a href="#先玩哪一种">三种玩法</a> ·
   <a href="#操作速查">操作速查</a> ·
   <a href="MCP_INTEGRATION.md">可选 MCP 联动</a>
 </p>
-
-> **一句话速览 / Quick answer：** 打开单个 HTML 网页就能玩的 3D 物理游戏与搭塔小游戏（Three.js + cannon-es）：拿快餐薯条和麦乐鸡块往上垒高塔或拼抖音热门麦当龙、三角龙等 12 种造型，风一吹重心不稳就会摇晃倒塌，类似 3D 物理叠叠乐（Jenga）的免安装摸鱼小游戏与「麦当劳门徒」整活模拟器，还附带 AI 陪玩指导技能（`mcd-fries-architect`）。 / A zero-build 3D browser physics game (open one HTML file) where you stack fast-food french fries and chicken nuggets into tall towers that wobble and collapse in the wind, paired with an AI coach Skill.
-
-把薯条当梁柱、鸡块当底座，先摆出一个造型，再看看它能不能站稳。FriesCraft 用 **Three.js + cannon-es** 做成一个无需构建的单文件网页游戏，支持桌面和触屏操作，应用内可切换中文 / English。
 
 <p align="center">
   <a href="assets/fry-builder-demo.mp4"><img src="assets/fry-builder-keyframes.jpg" width="900" alt="FriesCraft 现有展示视频的六帧图集，包含创意食物视觉与游戏画面"></a>
@@ -30,6 +26,22 @@
 
 > [!NOTE]
 > 独立开发的麦当劳程序员节创意开发大赛参赛作品，**不是麦当劳官方产品，参赛不代表获奖或官方背书**。无需连接 MCP 即可玩游戏；加载 3D 库需要网络。
+
+## 开始搭建
+
+推荐使用本地 HTTP 服务，不需要 npm 安装或构建：
+
+```bash
+git clone https://github.com/yuzhang-zhong/mcd-fries-architect.git
+cd mcd-fries-architect
+python -m http.server 8080
+```
+
+用支持 WebGL 的现代浏览器打开 **<http://localhost:8080>**。点 **自由搭**，选一根薯条，把鼠标移到餐盘上看放置预览，再单击放下。触屏上拖动预览，轻点放置。
+
+- 游戏通过 jsDelivr 加载 Three.js 0.160.0 与 cannon-es 0.20.0，**不是完全离线版**。若没有 3D 场景，检查浏览器的 WebGL 支持和 CDN 是否可达。
+- 在同一局域网内，手机可尝试访问电脑的局域网 IP 和同一端口；是否可达取决于网络与防火墙设置。
+- 左上面板的 `中文` / `EN` 按钮切换游戏语言。其他语言 README 是导航入口，不代表游戏已有对应翻译。
 
 ## 先玩哪一种
 
@@ -63,22 +75,6 @@
 | 妖风 | 14 根 | 1.05 m | 更强的随机风力 |
 
 三档都需要达标后**稳住 5 秒**。难度提升还会降低摩擦；放置时的轻微扰动，让“看起来稳”不一定真的稳。最好成绩保存在当前浏览器本地，可复制战绩或导出截图分享。
-
-## 开始搭建
-
-推荐使用本地 HTTP 服务，不需要 npm 安装或构建：
-
-```bash
-git clone https://github.com/yuzhang-zhong/mcd-fries-architect.git
-cd mcd-fries-architect
-python -m http.server 8080
-```
-
-浏览器打开 **<http://localhost:8080>**。电脑与手机在同一局域网时，手机可访问电脑的局域网 IP 和同一端口；是否可达取决于网络与防火墙设置。
-
-- 游戏通过 jsDelivr 加载 Three.js 0.160.0 与 cannon-es 0.20.0，**不是完全离线版**。
-- 需要支持 WebGL 的现代浏览器。若打开后没有 3D 场景，先检查浏览器控制台与 CDN 是否可达。
-- 左上面板的 `中文` / `EN` 按钮切换游戏语言。其他语言 README 是导航入口，不代表游戏已有对应翻译。
 
 ## 操作速查
 
