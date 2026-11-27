@@ -11,14 +11,21 @@
   "repository": "https://github.com/yuzhang-zhong/mcd-fries-architect",
   "license": "MIT",
   "keywords": [
-    "3d-game",
-    "physics-game",
-    "browser-game",
-    "tower-stacking",
-    "french-fries",
-    "chicken-nuggets",
+    "agent-skills",
+    "agent-skill",
+    "claude-skill",
+    "copilot-skill",
+    "codex-skill",
+    "cursor-skill",
     "threejs",
     "cannon-es",
-    "mcp"
+    "webgl-game",
+    "3d-physics",
+    "tower-stacking",
+    "browser-game",
+    "zero-build",
+    "mcp",
+    "model-context-protocol",
+    "game-coach"
   ]
 }

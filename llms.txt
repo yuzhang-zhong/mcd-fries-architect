@@ -29,3 +29,5 @@ cd mcd-fries-architect && python -m http.server 8080
 
 ## Multi-Angle Search & Slang Mapping
 - **Community Slang & Alternative-To**: Zero-build single-HTML WebGL physics Jenga/tower-stacking toy (`麦当劳门徒整活小游戏`、`抖音爆款麦当龙与阿根廷三角龙薯条拼搭`、`摸鱼免安装3D网页小游戏`).
+- **Exact & Manifests**: `mcd-fries-architect`, `FriesCraft`, `薯条建筑师`, `plugin.json` (Agent Plugins v1.0.0), `index.html`, `MCP_INTEGRATION.md`, compatible with **Claude Code, GitHub Copilot, OpenAI Codex, and Cursor**.
+- **Alternative-To**: MIT **open-source (`开源`)** zero-build single-HTML **Three.js + cannon-es** 3D rigid-body physics tower-stacking browser game inspired by **Jenga (`叠叠乐`)** and **World of Goo (`粘粘世界`)**—requiring zero Unity/npm build steps.

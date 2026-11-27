@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://yuzhang-zhong.github.io/mcd-fries-architect/sitemap.xml

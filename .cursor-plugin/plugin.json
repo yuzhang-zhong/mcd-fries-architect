@@ -8,16 +8,22 @@
   "homepage": "https://github.com/yuzhang-zhong/mcd-fries-architect",
   "repository": "https://github.com/yuzhang-zhong/mcd-fries-architect",
   "keywords": [
+    "agent-skills",
     "agent-skill",
-    "3d-game",
-    "physics-game",
-    "browser-game",
-    "french-fries",
-    "chicken-nuggets",
-    "tower-stacking",
+    "claude-skill",
+    "copilot-skill",
+    "codex-skill",
+    "cursor-skill",
     "threejs",
     "cannon-es",
-    "mcp"
+    "webgl-game",
+    "3d-physics",
+    "tower-stacking",
+    "browser-game",
+    "zero-build",
+    "mcp",
+    "model-context-protocol",
+    "game-coach"
   ],
   "skills": [
     "./skills/mcd-fries-architect"

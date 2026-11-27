@@ -89,6 +89,15 @@ The [companion Skill](../skills/mcd-fries-architect/SKILL.md) documents building
 
 WorkBuddy is one example of a compatible client. Nutrition, campaign, and store information must follow the official live results; see [MCP_INTEGRATION.md](../MCP_INTEGRATION.md) for the full boundaries.
 
+## Frequently Asked Questions (FAQ)
+
+<details>
+<summary>Do I need npm, Unity, or a build step to play FriesCraft or use the AI coach Skill?</summary>
+
+No. **FriesCraft** is an MIT open-source zero-build single-file (`index.html`) **Three.js + cannon-es** 3D rigid-body physics tower-stacking game inspired by **Jenga** and **World of Goo**—playable directly in desktop or mobile browsers. You can also install the companion AI co-play coach Skill (`plugin.json`) across **Claude Code, GitHub Copilot, OpenAI Codex, and Cursor** with optional `mcd-mcp-server` MCP nutrition/store lookup.
+
+</details>
+
 ## Inspiration and status
 
 Inspired by the McDonald's Argentina “Jugá con la comida” triceratops tutorial and community fry-building creations, with additional original presets.
