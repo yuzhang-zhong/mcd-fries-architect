@@ -121,6 +121,10 @@ mcd-fries-architect/
 
 本项目由参赛者独立开发，与品牌官方产品或背书无关。餐品信息、价格及供应状态以官方渠道实时结果为准；项目输出不构成医疗、营养或其他专业建议。[参赛声明原文](CONTEST_DECLARATION.md)保留不变。
 
+## English
+
+**FriesCraft** (*薯条建筑师*) is a zero-build, single-file 3D rigid-body physics browser game (`index.html`, built with **Three.js + cannon-es**) where you stack McDonald's-inspired French fries, McNuggets, and burger patties under real gravity, friction, and wind gusts. Explore 12 food-sculpture presets (Triceratops, McDragon, Rocket, Golden Arches, etc.), build freely with center-of-mass stability feedback, or beat the 5-second hold Tower Challenge on desktop or mobile. Includes an optional AI co-play Agent Skill ([`skill/SKILL.md`](skill/SKILL.md)) and [McDonald's MCP integration guide](MCP_INTEGRATION.md). See the [full English README](i18n/README.en.md).
+
 <a id="languages"></a>
 ## 更多语言 / Languages
 

@@ -1,0 +1,10 @@
+{
+  "plugins": [
+    {
+      "name": "mcd-fries-architect",
+      "description": "FriesCraft AI co-play coach and Agent Skill for the 3D rigid-body physics McDonald's French fries building game with optional MCP integration.",
+      "version": "1.0.0",
+      "path": "../skill"
+    }
+  ]
+}

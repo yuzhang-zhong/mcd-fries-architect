@@ -1,6 +1,6 @@
 ---
 name: mcd-fries-architect
-description: 薯条建筑师 FriesCraft —— 麦当劳薯条 3D 搭建游戏陪玩。当用户想玩薯条/麦乐鸡创意搭建（麦当龙、三角龙、高塔挑战等）、问搭建技巧、问薯条热量营养、或想找线下门店去真实复刻时使用。核心是物理搭建玩法陪玩与教学，不涉及点餐算价。
+description: "FriesCraft (薯条建筑师) — AI co-play coach and Agent Skill for the 3D rigid-body physics McDonald's French fries & McNuggets building game (Three.js + cannon-es), with optional McDonald's MCP server integration for nutrition, campaign calendar, and nearby store lookup. Use when the user wants to play or learn 3D French-fry tower stacking, build food sculptures (Triceratops, McDragon), beat wind-gust tower challenges, check fry nutrition, or recreate builds offline. 当用户想玩麦当劳薯条/麦乐鸡3D创意搭建、问搭塔防倒物理技巧、查热量营养或联动麦当劳MCP时使用。"
 ---
 
 # 薯条建筑师 FriesCraft · 搭建游戏陪玩
