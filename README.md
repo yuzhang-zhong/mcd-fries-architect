@@ -4,7 +4,7 @@
 
 <h1 align="center">薯条建筑师 · FriesCraft</h1>
 
-<p align="center"><strong>一根薯条会倒。三根，也许能搭出第一座塔。</strong><br>有重力、会滑落、会坍塌的 3D 休闲搭建游戏。</p>
+<p align="center"><strong>一根薯条会倒。三根，也许能搭出第一座塔。</strong><br>用 Three.js + cannon-es 做的有真实刚体重力和随机妖风挑战的麦当劳薯条与麦乐鸡 3D 搭塔网页小游戏（附 AI 陪玩 Skill 与 MCP 联动）。<br>Zero-build single-file 3D rigid-body physics browser game (Three.js + cannon-es) where you stack McDonalds French fries and chicken nuggets (McNuggets) into towers and sculptures against gravity and wind gusts, with an AI co-play Agent Skill.</p>
 
 <p align="center">
   <a href="#开始搭建"><img src="https://img.shields.io/badge/运行-无需构建-0f766e" alt="无需 npm 安装或构建"></a>
