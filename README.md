@@ -123,6 +123,12 @@ mcd-fries-architect/
 
 本项目由参赛者独立开发，与品牌官方产品或背书无关。餐品信息、价格及供应状态以官方渠道实时结果为准；项目输出不构成医疗、营养或其他专业建议。[参赛声明原文](CONTEST_DECLARATION.md)保留不变。
 
+## 常见问题 · FAQ
+
+- **需要安装 Node.js、npm 打包或配置麦当劳 MCP 才能玩吗？** 都不需要。游戏本体都在单个 [`index.html`](index.html) 里，用 `python -m http.server 8080` 启动本地静态服务即可在电脑或手机浏览器开玩；AI 陪玩 Skill 与 MCP 联动完全可选。
+- **How do you keep a French-fry tower from collapsing in Gale Wind mode?** Build a wide three-fry tripod ("tent") base instead of standing single fries upright, keep the center-of-mass dot green, taper upper layers inward like a pyramid, and avoid tall vertical "sail" fries at the top.
+- **How do I install the AI co-play coach Skill?** Run `gh skill install yuzhang-zhong/mcd-fries-architect mcd-fries-architect` or `npx skills add https://github.com/yuzhang-zhong/mcd-fries-architect --skill mcd-fries-architect`.
+
 ## English
 
 **FriesCraft** (*薯条建筑师*) is a zero-build, single-file 3D rigid-body physics browser game (`index.html`, built with **Three.js + cannon-es**) where you stack McDonald's-inspired French fries, McNuggets, and burger patties under real gravity, friction, and wind gusts. Explore 12 food-sculpture presets (Triceratops, McDragon, Rocket, Golden Arches, etc.), build freely with center-of-mass stability feedback, or beat the 5-second hold Tower Challenge on desktop or mobile. Includes an optional AI co-play Agent Skill ([`skills/mcd-fries-architect/SKILL.md`](skills/mcd-fries-architect/SKILL.md)) and [McDonald's MCP integration guide](MCP_INTEGRATION.md). See the [full English README](i18n/README.en.md).

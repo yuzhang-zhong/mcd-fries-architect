@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use or reference this project, please cite it using the metadata below."
+type: software
+title: "FriesCraft (薯条建筑师): Zero-Build 3D Rigid-Body Physics French Fries Tower Game and AI Coach Skill"
+authors:
+  - family-names: "Zhong"
+    given-names: "Yuzhang"
+repository-code: "https://github.com/yuzhang-zhong/mcd-fries-architect"
+url: "https://github.com/yuzhang-zhong/mcd-fries-architect"
+abstract: "Single-file zero-build 3D browser physics game (index.html, Three.js + cannon-es) where players stack fast-food French fries, chicken nuggets (McNuggets), and burger patties into 12 sculptures or wind-gust high-tower challenges, bundled with an AI co-play coach Agent Skill and optional MCP guide."
+keywords:
+  - "3d-game"
+  - "physics-game"
+  - "browser-game"
+  - "tower-stacking"
+  - "jenga-like"
+  - "french-fries"
+  - "chicken-nuggets"
+  - "mcdonalds"
+  - "threejs"
+  - "cannon-es"
+  - "agent-skill"
+  - "mcp"
