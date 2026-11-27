@@ -18,6 +18,8 @@
   <a href="MCP_INTEGRATION.md">可选 MCP 联动</a>
 </p>
 
+> **一句话速览 / Quick answer：** 打开单个 HTML 网页就能玩的 3D 物理搭塔小游戏（Three.js + cannon-es）：拿快餐薯条和麦乐鸡块往上垒高塔或拼造型，风一吹重心不稳就会摇晃倒塌，还附带 AI 陪玩指导技能（`mcd-fries-architect`）。 / A zero-build 3D browser physics game (open one HTML file) where you stack fast-food french fries and chicken nuggets into tall towers that wobble and collapse in the wind, paired with an AI coach Skill.
+
 把薯条当梁柱、鸡块当底座，先摆出一个造型，再看看它能不能站稳。FriesCraft 用 **Three.js + cannon-es** 做成一个无需构建的单文件网页游戏，支持桌面和触屏操作，应用内可切换中文 / English。
 
 <p align="center">
@@ -99,7 +101,7 @@ python -m http.server 8080
 
 ## 可选：让 AI 陪你搭
 
-[`skill/SKILL.md`](skill/SKILL.md) 面向支持 Skill、并连接了[麦当劳 MCP](https://github.com/M-China/mcd-mcp-server) 的 AI 客户端，例如 WorkBuddy。它提供搭建陪玩指引，以及营养查询、活动日历和附近门店查询的联动说明。
+[`skills/mcd-fries-architect/SKILL.md`](skills/mcd-fries-architect/SKILL.md) 面向支持 Skill、并连接了[麦当劳 MCP](https://github.com/M-China/mcd-mcp-server) 的 AI 客户端，例如 WorkBuddy。它提供搭建陪玩指引，以及营养查询、活动日历和附近门店查询的联动说明。
 
 **游戏本体不会因为打开网页就自动连接 MCP。** 这些能力需要客户端单独配置；营养、活动与门店信息以官方实时返回为准。完整边界见 [MCP_INTEGRATION.md](MCP_INTEGRATION.md)。
 
@@ -109,7 +111,7 @@ python -m http.server 8080
 mcd-fries-architect/
 ├── index.html                 # 单文件 3D 游戏
 ├── assets/                    # 已有 MP4、视频海报、JPG / PDF 关键帧
-├── skill/SKILL.md             # 搭建陪玩与可选 MCP 联动
+├── skills/mcd-fries-architect/SKILL.md             # 搭建陪玩与可选 MCP 联动
 ├── i18n/                      # 多语言 README 入口
 ├── MCP_INTEGRATION.md
 └── CONTEST_DECLARATION.md      # 原有参赛声明
@@ -123,7 +125,7 @@ mcd-fries-architect/
 
 ## English
 
-**FriesCraft** (*薯条建筑师*) is a zero-build, single-file 3D rigid-body physics browser game (`index.html`, built with **Three.js + cannon-es**) where you stack McDonald's-inspired French fries, McNuggets, and burger patties under real gravity, friction, and wind gusts. Explore 12 food-sculpture presets (Triceratops, McDragon, Rocket, Golden Arches, etc.), build freely with center-of-mass stability feedback, or beat the 5-second hold Tower Challenge on desktop or mobile. Includes an optional AI co-play Agent Skill ([`skill/SKILL.md`](skill/SKILL.md)) and [McDonald's MCP integration guide](MCP_INTEGRATION.md). See the [full English README](i18n/README.en.md).
+**FriesCraft** (*薯条建筑师*) is a zero-build, single-file 3D rigid-body physics browser game (`index.html`, built with **Three.js + cannon-es**) where you stack McDonald's-inspired French fries, McNuggets, and burger patties under real gravity, friction, and wind gusts. Explore 12 food-sculpture presets (Triceratops, McDragon, Rocket, Golden Arches, etc.), build freely with center-of-mass stability feedback, or beat the 5-second hold Tower Challenge on desktop or mobile. Includes an optional AI co-play Agent Skill ([`skills/mcd-fries-architect/SKILL.md`](skills/mcd-fries-architect/SKILL.md)) and [McDonald's MCP integration guide](MCP_INTEGRATION.md). See the [full English README](i18n/README.en.md).
 
 <a id="languages"></a>
 ## 更多语言 / Languages

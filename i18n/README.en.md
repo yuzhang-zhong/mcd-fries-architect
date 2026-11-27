@@ -85,14 +85,14 @@ The ghost preview indicates whether placement is possible. Center-of-mass and st
 
 - [`index.html`](../index.html): the single-file 3D game.
 - [`assets/`](../assets/): existing MP4, video poster, JPG and PDF keyframes.
-- [`skill/SKILL.md`](../skill/SKILL.md): building companionship and optional MCP integration.
+- [`skills/mcd-fries-architect/SKILL.md`](../skills/mcd-fries-architect/SKILL.md): building companionship and optional MCP integration.
 - [`i18n/`](./): README language entry points.
 - [`MCP_INTEGRATION.md`](../MCP_INTEGRATION.md): integration requirements and boundaries.
 - [`CONTEST_DECLARATION.md`](../CONTEST_DECLARATION.md): original contest declaration.
 
 ## Optional AI companion
 
-The [companion Skill](../skill/SKILL.md) documents building guidance and optional nutrition, campaign, and nearby-store queries through the [McDonald's MCP server](https://github.com/M-China/mcd-mcp-server). It requires a separately configured compatible AI client. The game itself does not automatically connect to MCP, and MCP is not required to play.
+The [companion Skill](../skills/mcd-fries-architect/SKILL.md) documents building guidance and optional nutrition, campaign, and nearby-store queries through the [McDonald's MCP server](https://github.com/M-China/mcd-mcp-server). It requires a separately configured compatible AI client. The game itself does not automatically connect to MCP, and MCP is not required to play.
 
 WorkBuddy is one example of a compatible client. Nutrition, campaign, and store information must follow the official live results; see [MCP_INTEGRATION.md](../MCP_INTEGRATION.md) for the full boundaries.
 

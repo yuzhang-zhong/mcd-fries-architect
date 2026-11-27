@@ -1,10 +1,30 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "mcd-fries-architect",
+  "owner": {
+    "name": "yuzhang-zhong",
+    "url": "https://github.com/yuzhang-zhong"
+  },
+  "description": "Install mcd-fries-architect as a Claude plugin.",
   "plugins": [
     {
       "name": "mcd-fries-architect",
-      "description": "FriesCraft AI co-play coach and Agent Skill for the 3D rigid-body physics McDonald's French fries building game with optional MCP integration.",
-      "version": "1.0.0",
-      "path": "../skill"
+      "source": "./",
+      "description": "FriesCraft 3D browser physics game & AI co-play coach Skill: stack fast-food french fries and chicken nuggets into tall towers against gravity and wind gusts, with optional MCP integration.",
+      "homepage": "https://github.com/yuzhang-zhong/mcd-fries-architect",
+      "repository": "https://github.com/yuzhang-zhong/mcd-fries-architect",
+      "keywords": [
+        "agent-skill",
+        "3d-game",
+        "physics-game",
+        "browser-game",
+        "french-fries",
+        "chicken-nuggets",
+        "tower-stacking",
+        "threejs",
+        "cannon-es",
+        "mcp"
+      ]
     }
   ]
 }

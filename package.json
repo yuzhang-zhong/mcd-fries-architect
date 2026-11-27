@@ -1,0 +1,26 @@
+{
+  "name": "mcd-fries-architect",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Zero-build single-file 3D browser physics game (Three.js + cannon-es) where you stack fast-food french fries and chicken nuggets into tall towers that wobble in the wind, plus an AI co-play coach Skill.",
+  "repository": "github:yuzhang-zhong/mcd-fries-architect",
+  "keywords": [
+    "3d-game",
+    "physics-game",
+    "browser-game",
+    "tower-stacking",
+    "french-fries",
+    "chicken-nuggets",
+    "mcdonalds",
+    "threejs",
+    "cannon-es",
+    "agent-skill",
+    "mcp",
+    "html5-game"
+  ],
+  "pi": {
+    "skills": [
+      "./skills/mcd-fries-architect"
+    ]
+  }
+}
