@@ -26,3 +26,6 @@ cd mcd-fries-architect && python -m http.server 8080
 - [AI Co-Play Coach Skill](skills/mcd-fries-architect/SKILL.md)
 - [MCP Integration Guide](MCP_INTEGRATION.md)
 - [README (简体中文)](README.md) · [README (English)](i18n/README.en.md)
+
+## Multi-Angle Search & Slang Mapping
+- **Community Slang & Alternative-To**: Zero-build single-HTML WebGL physics Jenga/tower-stacking toy (`麦当劳门徒整活小游戏`、`抖音爆款麦当龙与阿根廷三角龙薯条拼搭`、`摸鱼免安装3D网页小游戏`).

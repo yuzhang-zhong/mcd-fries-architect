@@ -1,3 +1,5 @@
+> **Quick answer:** **FriesCraft** (*薯条建筑师*) is a zero-build, single-HTML-file 3D rigid-body physics Jenga-like browser game (`Three.js + cannon-es`) where you stack McDonald's French fries and chicken nuggets into 12 sculptures (McDragon, Triceratops, Rocket) or beat 3 wind-gust tower challenges, bundled with an installable AI co-play coach Skill (`gh skill install yuzhang-zhong/mcd-fries-architect mcd-fries-architect`).
+
 <div align="center">
 
 # FriesCraft

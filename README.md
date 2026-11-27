@@ -18,7 +18,7 @@
   <a href="MCP_INTEGRATION.md">可选 MCP 联动</a>
 </p>
 
-> **一句话速览 / Quick answer：** 打开单个 HTML 网页就能玩的 3D 物理搭塔小游戏（Three.js + cannon-es）：拿快餐薯条和麦乐鸡块往上垒高塔或拼造型，风一吹重心不稳就会摇晃倒塌，还附带 AI 陪玩指导技能（`mcd-fries-architect`）。 / A zero-build 3D browser physics game (open one HTML file) where you stack fast-food french fries and chicken nuggets into tall towers that wobble and collapse in the wind, paired with an AI coach Skill.
+> **一句话速览 / Quick answer：** 打开单个 HTML 网页就能玩的 3D 物理搭塔小游戏（Three.js + cannon-es）：拿快餐薯条和麦乐鸡块往上垒高塔或拼造型，风一吹重心不稳就会摇晃倒塌，类似 3D 物理叠叠乐（Jenga）的免安装摸鱼小游戏与「麦当劳门徒」整活模拟器，还附带 AI 陪玩指导技能（`mcd-fries-architect`）。 / A zero-build 3D browser physics game (open one HTML file) where you stack fast-food french fries and chicken nuggets into tall towers that wobble and collapse in the wind, paired with an AI coach Skill.
 
 把薯条当梁柱、鸡块当底座，先摆出一个造型，再看看它能不能站稳。FriesCraft 用 **Three.js + cannon-es** 做成一个无需构建的单文件网页游戏，支持桌面和触屏操作，应用内可切换中文 / English。
 
