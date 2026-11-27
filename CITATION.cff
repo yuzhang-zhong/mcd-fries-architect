@@ -7,6 +7,7 @@ authors:
     given-names: "Yuzhang"
 repository-code: "https://github.com/yuzhang-zhong/mcd-fries-architect"
 url: "https://github.com/yuzhang-zhong/mcd-fries-architect"
+license: "MIT"
 abstract: "Single-file zero-build 3D browser physics game (index.html, Three.js + cannon-es) where players stack fast-food French fries, chicken nuggets (McNuggets), and burger patties into 12 sculptures or wind-gust high-tower challenges, bundled with an AI co-play coach Agent Skill and optional MCP guide."
 keywords:
   - "3d-game"

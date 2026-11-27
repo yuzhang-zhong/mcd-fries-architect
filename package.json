@@ -22,5 +22,6 @@
     "skills": [
       "./skills/mcd-fries-architect"
     ]
-  }
+  },
+  "license": "MIT"
 }

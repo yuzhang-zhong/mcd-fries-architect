@@ -24,7 +24,8 @@
         "threejs",
         "cannon-es",
         "mcp"
-      ]
+      ],
+      "license": "MIT"
     }
   ]
 }
